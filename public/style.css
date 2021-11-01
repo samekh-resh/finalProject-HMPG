@@ -1,7 +1,42 @@
 body{
   padding-top:80px;
   word-wrap:break-word;
+  background: url(/img/pic3.jpg);
+  background-size: cover;
+}
+
+.index{
+  padding: 10px;
+  border-radius: 2%;
 }
 img{
   height: 200px;
 }
+ul{
+  margin: 0%;
+  padding: 0;
+  list-style-type: none;
+}
+.container{
+  background: rgba(0, 0, 0, 0.582);
+  width: 600px;
+  color: white;
+  border-radius: 2px;
+  margin-bottom: 5%;
+  text-align: center;
+}
+
+.well{
+  color: black;
+}
+
+.row{
+  width: 500px;
+}
+
+li{
+  background: rgba(255, 255, 255, 0.774);
+  padding: 3%;
+  color: black;
+}
+/* give the spans a display block so that they can all be on their own lines.  */
