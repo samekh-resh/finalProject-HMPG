@@ -6,11 +6,6 @@ var bcrypt = require('bcrypt-nodejs');
 var userSchema = mongoose.Schema({
 
     local: {
-        userName: String,
-        address: String,
-        city: String,
-        zipcode: Number,
-        state: String,
         email: String,
         password: String 
     },
@@ -31,7 +26,24 @@ var userSchema = mongoose.Schema({
         token: String,
         email: String,
         name: String
-    }
+    },
+    // have an object
+    userName: String,
+    address: String,
+    city: String,
+    zipcode: Number,
+    state: String,
+    birthday: Date
+
+    // userLocation: {
+    //     city: String,
+    //     address: String, 
+    //     zipcode: Number,
+    //     state: String,
+    // }
+
+    //profile ciuld have name age chore anything. 
+
 
 });
 

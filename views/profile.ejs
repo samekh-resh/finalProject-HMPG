@@ -16,7 +16,6 @@
 
     <div class="row">
 
-        <!-- LOCAL INFORMATION -->
         <div class="col-sm-6">
             <div class="well">
                 <h3><span class="fa fa-user"></span> Local</h3>
@@ -25,7 +24,7 @@
                     <p>
                         <strong>id</strong>: <%= user._id %><br>
                         <strong>email</strong>: <%= user.local.email %><br>
-                        <!-- <strong>password</strong>: <%# user.local.password %> -->
+                       
                     </p>
 
                     <a href="/unlink/local" class="btn btn-default">Unlink</a>
@@ -40,13 +39,14 @@
         <div class="col-sm-6">
           <h6>Messages</h6>
           <ul class="messages">
-          <% for(var i=0; i<messages.length; i++) {%>
+          <% for(var i=0; i<housingPosts.length; i++) {%>
             <li class="message">
-              <span>name : <%= messages[i].name %></span>
-              <span>titled : <%= messages[i].title %></span>
-              <span> datePosted: <%= messages[i].datePosted %></span>
-              <span> msg: <%= messages[i].msg %></span>
-              <span> <%= messages[i].thumbUp %></span>
+              <span>name : <%= housingPosts[i].name %></span>
+              <span>titled : <%= housingPosts[i].title %></span>
+              <span> datePostedBy: <%= housingPosts[i].datePostedBy %></span>
+              <span> msg: <%= housingPosts[i].msg %></span>
+              <span> <%= housingPosts[i].thumbUp %></span>
+             
               <span><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>
               <span><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>
               <span><i class="fa fa-trash" aria-hidden="true"></i></span>
@@ -60,7 +60,7 @@
             <input type="text" value="<%= user.local.email %>" name="name">
             <input type="text" placeholder="title" name="title">
             <input type="text" placeholder="message" name="msg">
-            <input type="date" placeholder="date posted" name="datePosted">
+            <input type="date" placeholder="date posted by" name="datePostedBy">
             <button type="submit">Submit</button>
           </form>
         </div>
