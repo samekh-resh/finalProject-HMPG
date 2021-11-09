@@ -1,5 +1,15 @@
-module.exports = function (app, passport, db) {
+module.exports = function (app, passport, db, multer, ObjectId, ) {
 
+    // Image Upload Code =========================================================================
+    var storage = multer.diskStorage({
+      destination: (req, file, cb) => {
+        cb(null, 'public/images/uploads')
+      },
+      filename: (req, file, cb) => {
+        cb(null, file.fieldname + '-' + Date.now() + ".png")
+      }
+    });
+    var upload = multer({ storage: storage });
   // normal routes ===============================================================
 
   // show the home page (will also have our login links)
@@ -18,36 +28,81 @@ module.exports = function (app, passport, db) {
     })
   });
 
+
+  // Submit Housing Post=========================
+  app.get('/submitHousingPost', isLoggedIn, function (req, res) {
+    res.render('submitHousingPost.ejs',
+    {user: req.user})
+  });
+  // get individual Housing Post=========================
+  app.get('/housingPost', isLoggedIn, function (req, res) {
+    res.render('housingPost.ejs',
+    {user: req.user})
+  });
+  // Submit Topic=========================
+  app.get('/submitTopic', isLoggedIn, function (req, res) {
+    res.render('submitTopic.ejs', 
+    {user: req.user})
+  });
+  // get topic page=========================
+  app.get('/topicPost', isLoggedIn, function (req, res) {
+    res.render('topicPost.ejs', 
+    {user: req.user})
+  });
+
   // LOGOUT ==============================
   app.get('/logout', function (req, res) {
     req.logout();
     res.redirect('/');
   });
 
-  // message board routes ===============================================================
+  //chat postings
 
-  app.post('/housingPost', (req, res) => {
-    db.collection('housingPosts').save({ name: req.body.name, title: req.body.title, msg: req.body.msg,  datePostedBy: new Date(req.body.birthday), thumbUp: 0, thumbDown: 0 }, (err, result) => {
+ app.post('/chatSubmitted', (req, res) => {
+    db.collection('chatSubmitted').save({ name: req.body.name, title: req.body.title, msg: req.body.msg, datePostedBy: new Date(req.body.datPostdBy), neighborhood: req.body.neighborhood, thumbUp: 0, thumbDown: 0 }, (err, result) => {
       if (err) return console.log(err)
       console.log('saved to database')
       res.redirect('/profile')
+      // this ejs file will haave to be the page where the post is individuall going to be shown. 
     })
   })
 
-  app.put('/messages', (req, res) => {
-    db.collection('messages')
-      .findOneAndUpdate({ name: req.body.name, msg: req.body.msg }, {
-        $set: {
-          thumbUp: req.body.thumbUp + 1
-        }
-      }, {
-        sort: { _id: -1 },
-        upsert: true
-      }, (err, result) => {
-        if (err) return res.send(err)
-        res.send(result)
-      })
+  // housing oist route board routes ===============================================================
+
+  app.post('/topic', (req, res) => {
+    db.collection('topic').save({ name: req.body.name, title: req.body.title, msg: req.body.msg, datePostedBy: new Date(req.body.birthday), neighborhood: req.body.neighborhood, thumbUp: 0, thumbDown: 0 }, (err, result) => {
+      if (err) return console.log(err)
+      console.log('saved to database')
+      res.redirect('/profile')
+      // this ejs file will haave to be the page where the post is individuall going to be shown. 
+    })
   })
+
+  // post route for housing post
+  
+  app.post('/submitHousingPost', (req, res) => {
+    db.collection('housingPost').save({ userName: req.body.name, zipcode: req.body.zipcode, zipcode: req.body.zipcode, housingType: req.body.housingType, title: req.body.title, aboutPosting: req.body.aboutPosting, datePostedBy: new Date(req.body.birthday)}, (err, result) => {
+      if (err) return console.log(err)
+      console.log('saved to database')
+      res.redirect('/profile')
+      // this ejs file will haave to be the page where the post is individuall going to be shown. 
+    })
+  })
+
+  // app.put('/messages', (req, res) => {
+  //   db.collection('messages')
+  //     .findOneAndUpdate({ name: req.body.name, msg: req.body.msg }, {
+  //       $set: {
+  //         thumbUp: req.body.thumbUp + 1
+  //       }
+  //     }, {
+  //       sort: { _id: -1 },
+  //       upsert: true
+  //     }, (err, result) => {
+  //       if (err) return res.send(err)
+  //       res.send(result)
+  //     })
+  // })
 
   app.delete('/messages', (req, res) => {
     db.collection('messages').findOneAndDelete({ name: req.body.name, msg: req.body.msg }, (err, result) => {
@@ -87,23 +142,23 @@ module.exports = function (app, passport, db) {
     failureRedirect: '/signup', // redirect back to the signup page if there is an error
     failureFlash: true // allow flash messages
   }), function (req, res) { //doing more after passport creates req.user properties other than email and password
-    
+
     db.collection('users')
-    .findOneAndUpdate({ _id: req.user._id}, {
-      $set: {
-        userName: req.body.userName,
-        address: req.body.address,
-        city: req.body.city,
-        zipcode: req.body.zipcode,
-        state: req.body.state,
-        birthday: new Date(req.body.birthday)
-      }
-    }, {
-      sort: { _id: -1 },
-      upsert: true
-    }, (err, result) => {
-      res.redirect('/profile')
-    })
+      .findOneAndUpdate({ _id: req.user._id }, {
+        $set: {
+          userName: req.body.userName,
+          address: req.body.address,
+          city: req.body.city,
+          zipcode: req.body.zipcode,
+          state: req.body.state,
+          birthday: new Date(req.body.birthday)
+        }
+      }, {
+        sort: { _id: -1 },
+        upsert: true
+      }, (err, result) => {
+        res.redirect('/profile')
+      })
   });
 
   // =============================================================================
