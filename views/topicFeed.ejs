@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+    <title>Topic Feed</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav>
+    <h1>HOMEPAGE</h1>
+    <button><a href="/submitHousingPost">submit housing</a></button>
+    <button><a href="/submitTopic">submit topic</a></button>
+    <button><a href="/profile">profile</a></button>
+    <!-- <button><a href="/topicPost">go to invididual topic page</a></button>
+    <button><a href="/housingPost">go to individual post page</a></button> -->
+    <button><a href="/housingPostFeed">housingFeed</a></button>
+    <button><a href="/topicFeed">topicFeed</a></button>
+    <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+    <a href="/login" class="btn btn-default btn-sm">Login</a>
+  </nav>
+<div class="container">
+
+ 
+
+    <div class="page-header text-center">
+        <h2><span class="fa fa-info-circle"></span> topicFeed</h2>
+    </div>
+
+    <div class="holdingSector">
+
+        <div class="feed">
+
+          <% for(var i=0; i<topic.length; i++) {%>
+            <section class='individualPosting'>
+              <h4><%= topic[i].userName %></h4>
+              <a href="/topicPost?id=<%= topic[i]._id%>">
+                <span><%= topic[i].title %></span>
+                </a>
+              <span> datePostedBy: <%= topic[i].datePostedBy %></span>
+              <span><i class="fa fa-save" aria-hidden="true"></i></span>
+
+              <% if ( topic[i].userId.equals(user._id)) { %>
+              <span><i data-id="<%= topic[i]._id %>" class="fa topic-trash fa-trash" aria-hidden="true"></i></span>
+              <% } %>
+            </section>
+            
+
+          <% } %>
+
+        </div>
+
+          <!-- so the profile section will have your saved housing posts, AND saved message board posts.  and other information to put in-->
+
+</div>
+
+<script src="main.js"></script>
+
+</body>
+</html>
+<!-- zipcodes for the checkbox -->
+<!-- <input type="checkbox" id="instagram" name="zipcodeChosen" value="19101">
+    <label for="instagram">19101</label>
+  </div> -->
+<!-- 19102, 19103, 19104, 19106, 19107, 19109, 19111, 19112, 19114, 19115, 19116, 19118, 19119, 19120, 19121, 19122, 19123, 19124, 19125, 19126, 19127, 19128, 19129, 19130, 19131, 19132, 19133, 19134, 19135, 19136, 19137, 19138, 19139, 19140, 19141, 19142, 19143, 19144, 19145, 19146, 19147, 19148, 19149, 19150, 19151, 19152, 19153, 19154 -->
+
+

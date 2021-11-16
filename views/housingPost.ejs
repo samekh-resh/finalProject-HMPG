@@ -12,20 +12,38 @@
 <body>
 
 
-    <h1> Housing Posts</h1>
+    <nav>
+        <h1>HOMEPAGE</h1>
+        <button><a href="/submitHousingPost">submit housing</a></button>
+        <button><a href="/submitTopic">submit topic</a></button>
+        <button><a href="/profile">profile</a></button>
+        <!-- <button><a href="/topicPost">go to invididual topic page</a></button>
+        <button><a href="/housingPost">go to individual post page</a></button> -->
+        <button><a href="/housingPostFeed">housingFeed</a></button>
+        <button><a href="/topicFeed">topicFeed</a></button>
+        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+        <a href="/login" class="btn btn-default btn-sm">Login</a>
+      </nav>
 
-    <ul>
-        <li>
-            <h2>Name of Housing Post</h3>
-            <h3>NeighbordHood</h3>
-            <h4>Duration of Housing</h4>
-            <img src="" alt="">
-            <p>information about the housing goes here!</p>
+    <section class='title'>
+        <p>titled : </p>
+        <h2><%= housingPost.title %></h2>
+        <p><%= housingPost.datePostedBy %></p>
+    </section>
+        
 
-            <!-- ran on loop, so more can show up underneath -->
+    <section class="infoSec">
+        <h4>name : <%= housingPost.userName %></h4>
+        <h4>city : <%= housingPost.city %></h4>
+        <h5> zipcode: <%= housingPost.zipcode %></h5>
+        <h5> housing Type: <%= housingPost.housingType %></h5>
+        <h5> a little bit about posting: <%= housingPost.aboutPosting %></h5>
+        <span><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>
+        <span><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>
+        <span><i class="fa fa-trash" aria-hidden="true"></i></span>
+    </section>
 
-        </li>
-    </ul>
-    
+
 </body>
 </html>
+

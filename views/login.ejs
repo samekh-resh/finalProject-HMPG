@@ -7,10 +7,22 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <nav>
+        <h1>HOMEPAGE</h1>
+        <button><a href="/submitHousingPost">submit housing</a></button>
+        <button><a href="/submitTopic">submit topic</a></button>
+        <button><a href="/profile">profile</a></button>
+        <!-- <button><a href="/topicPost">go to invididual topic page</a></button>
+        <button><a href="/housingPost">go to individual post page</a></button> -->
+        <button><a href="/housingPostFeed">housingFeed</a></button>
+        <button><a href="/topicFeed">topicFeed</a></button>
+        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+        <a href="/login" class="btn btn-default btn-sm">Login</a>
+      </nav>
 <div class="container">
 <div class="col-sm-6 col-sm-offset-3">
 
-    <h1><span class="fa fa-sign-in"></span> Login</h1>
+    <h2><span class="fa fa-sign-in"></span> Login</h2>
 
     <% if (message.length > 0) { %>
         <div class="alert alert-danger"><%= message %></div>

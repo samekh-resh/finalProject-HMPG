@@ -1,9 +1,35 @@
 body{
-  padding-top:80px;
   word-wrap:break-word;
   background: url(/img/pic3.jpg);
   background-size: cover;
 }
+
+a{
+  color:rgb(216, 94, 94);
+}
+a:hover{
+  color:rgb(238, 178, 178);
+  text-shadow: 2px 2px 4px #000;
+  text-decoration: none;
+
+}
+
+
+nav{
+  background: rgba(252, 248, 248, 0.919);
+  width: 100%;
+  padding: 0.5%;
+  color: rgb(237, 133, 133);
+  margin-bottom: 5%;
+  text-align: center;
+}
+nav h1{
+  display: inline;
+}
+
+/* nav button{
+  background:;
+} */
 
 .index{
   padding: 10px;
@@ -20,23 +46,98 @@ ul{
 .container{
   background: rgba(0, 0, 0, 0.582);
   width: 600px;
-  color: white;
+  color: rgb(230, 178, 178);
   border-radius: 2px;
   margin-bottom: 5%;
   text-align: center;
 }
 
-.well{
+.standard{
   color: black;
+  width: 25%;
+  margin: auto;
+  background: rgb(255, 255, 255);
+  padding: 0.8%;
+  align-items: center;
 }
 
 .row{
   width: 500px;
 }
 
-li{
+.infoSec{
   background: rgba(255, 255, 255, 0.774);
   padding: 3%;
   color: black;
+  width: 50%;
+  margin:auto;
+}
+.profileBlock{
+  background: rgba(255, 255, 255, 0.774);
+  padding: 3%;
+  color: black;
+  margin:auto;
+  width:20%;
+}
+
+.feed{
+  overflow: auto;
+  background: rgb(216, 157, 94);
+  color:rgba(0, 0, 0, 0.582);
+  margin-bottom: 2%;
+}
+.submitChats{
+  background: rgba(255, 255, 255, 0.774);
+  padding: 3%;
+  color: black;
+  width: 50%;
+  margin:auto;
+  margin-bottom: 2%;
+}
+
+.title{
+  background: rgba(255, 255, 255, 0.774);
+  padding: 3%;
+  color: black;
+  margin: auto;
+  margin-bottom: 5%;
+  width: 50%;
+}
+
+.buttonBlock{
+  background: rgba(255, 255, 255, 0.774);
+  padding: 3%;
+  color: black;
+  margin: auto;
+  margin-bottom: 5%;
+  width: 50%;
+}
+/* spacing */
+
+table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  border: 3px solid purple;
+}
+
+thead th:nth-child(1) {
+  width: 30%;
+}
+
+thead th:nth-child(2) {
+  width: 20%;
+}
+
+thead th:nth-child(3) {
+  width: 15%;
+}
+
+thead th:nth-child(4) {
+  width: 35%;
+}
+
+th, td {
+  padding: 1px;;
 }
 /* give the spans a display block so that they can all be on their own lines.  */

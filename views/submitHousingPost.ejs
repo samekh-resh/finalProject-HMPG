@@ -13,9 +13,23 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+
+    <nav>
+      <h1>HOMEPAGE</h1>
+      <button><a href="/submitHousingPost">submit housing</a></button>
+      <button><a href="/submitTopic">submit topic</a></button>
+      <button><a href="/profile">profile</a></button>
+      <!-- <button><a href="/topicPost">go to invididual topic page</a></button>
+      <button><a href="/housingPost">go to individual post page</a></button> -->
+      <button><a href="/housingPostFeed">housingFeed</a></button>
+      <button><a href="/topicFeed">topicFeed</a></button>
+      <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+      <a href="/login" class="btn btn-default btn-sm">Login</a>
+    </nav>
+
     <div class="container">
       <div class="col-sm-6 col-sm-offset-3">
-        <h1><span class="fa fa-sign-in"></span> got some housing for us?</h1>
+        <h2><span class="fa fa-sign-in"></span> got some housing for us?</h2>
 
         <%# if (user.local.email) { %>
        
@@ -24,30 +38,41 @@
         <div class="well">
           <h3><span class="fa fa-user"></span> Local</h3>
 
-          <% if (user.local.email) { %>
-              <p>
-                  <strong>id</strong>: <%= user._id %><br>
-                  <strong>email</strong>: <%= user.local.email %><br>
-                 
-              </p>
-
-              <a href="/unlink/local" class="btn btn-default">Unlink</a>
-              <a href="/landingPage" class="btn btn-default">to landing Page</a>
-
-          <% } else { %>
-              <a href="/connect/local" class="btn btn-default">Connect Local</a>
-          <% } %>
-
 
         <!-- LOGIN FORM -->
         <form action="/submitHousingPost" method="post">
           <div class="form-group">
             <label>UserName</label>
             <input type="text" class="form-control" name='userName' value="<%= user.userName%>" />
+            <input type="hidden" value="<%= user._id %>" name="userId">
           </div>
           <div class="form-group">
             <label>zipcode</label>
             <input type="text" class="form-control" name="zipcode" />
+          </div>
+          <div class="form-group">
+            <label>city</label>
+            <input type="text" class="form-control" name="city" />
+          </div>
+          <div class="form-group">
+            <label for="neighborhood">Neighborhood</label>
+          
+            <select name="neighborhood" id="neighborhood">
+              <option selected disabled>neighborhood</option>
+              <option value="Center City">Center City</option>
+              <option value="South Philadelphia">South Philadelphia</option>
+              <option value="Southwest Philadelphia">Southwest Philadelphia</option>
+              <option value="Lower North Philadelphia">Lower North Philadelphia</option>
+              <option value="West Philadelphia">West Philadelphia</option>
+              <option value="Upper North Philadelphia">Upper North Philadelphia</option>
+              <option value="Port Richmond">Port Richmond</option>
+              <option value="Kensington">Kensington</option>
+              <option value="Roxborough-Manayunk">Roxborough-Manayunk</option>
+              <option value="Germantown-Chestnut Hill">Germantown-Chestnut Hill</option>
+              <option value="Olney-Oak Lane">Olney-Oak Lane</option>
+              <option value="Near Northeast Philadelphia">Near Northeast Philadelphia</option>
+              <option value="Far Northeast Philadelphia">Far Northeast Philadelphia</option>
+            </select>
           </div>
           <div class="form-group">
             <label for="housingType">Choose a housingType:</label>
@@ -55,12 +80,8 @@
             <select name="housingType" id="housingType">
               <option value="longterm">longterm (1yr+)</option>
               <option value="short Term">short term (6mos-1yr)</option>
-              <option value="mercedes">temporary</option>
+              <option value="temporary">temporary</option>
             </select>
-          </div>
-          <div class="form-group">
-            <label>city</label>
-            <input type="text" class="form-control" name="city" />
           </div>
           <div class="form-group">
             <label>Title</label>
@@ -69,6 +90,10 @@
           <div class="form-group">
             <label>a little about your posting?</label>
             <input type="text" class="form-control" name="aboutPosting" />
+          </div>
+          <div class="form-group">
+            <label>date Posted By</label>
+            <input type="date" class="form-control" name="datePostedBy" />
           </div>
 
           <button type="submit" class="btn btn-warning btn-lg">send</button>
@@ -82,5 +107,59 @@
         <p>Or go <a href="/">home</a>.</p>
       </div>
     </div>
+
+    <!-- <label for="neighborhood">Choose a Neighborhood:</label>
+          <select id="neightborhood">
+            <optgroup label="CenterCity">
+              <option>Chinatown</option>
+              <option>Ave of Arts</option>
+              <option>Callowhill</option>
+            </optgroup>
+            <optgroup label="SouthPhilly">
+              <option>Grays ferry</option>
+              <option>Central south philly</option>
+              <option>Italian market</option>
+            </optgroup>
+            <optgroup label="WestPhilly">
+              <option>Belmont district</option>
+              <option>Cedar park </option>
+              <option>Cathedral park</option>
+            </optgroup>
+          </select>  -->
+
+
   </body>
 </html>
+
+
+<!-- Center City
+South Philadelphia
+Southwest Philadelphia
+West Philadelphia
+Lower North Philadelphia
+Upper North Philadelphia
+Bridesburg-Kensington-Port Richmond
+Roxborough-Manayunk
+Germantown-Chestnut Hill
+Olney-Oak Lane
+Near Northeast Philadelphia
+Far Northeast Philadelphia -->
+<!-- 
+<div class="form-group">
+  <label for="neighborhood">Choose a housingType:</label>
+
+  <select name="neighborhood" id="neighborhood">
+    <option value="Center City">Center City</option>
+    <option value="South Philadelphia">South Philadelphia</option>
+    <option value="Southwest Philadelphia">Southwest Philadelphia</option>
+    <option value="Lower North Philadelphia">Lower North Philadelphia</option>
+    <option value="West Philadelphia">West Philadelphia</option>
+    <option value="Upper North Philadelphia">Upper North Philadelphia</option>
+    <option value="Bridesburg-Kensington-Port Richmond">Bridesburg-Kensington-Port Richmond</option>
+    <option value="Roxborough-Manayunk">Roxborough-Manayunk</option>
+    <option value="Germantown-Chestnut Hill">Germantown-Chestnut Hill</option>
+    <option value="Olney-Oak Lane">Olney-Oak Lane</option>
+    <option value="Near Northeast Philadelphia">Near Northeast Philadelphia</option>
+    <option value="Far Northeast Philadelphia">Far Northeast Philadelphia</option>
+  </select>
+</div> -->

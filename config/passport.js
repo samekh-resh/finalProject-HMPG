@@ -110,3 +110,28 @@ module.exports = function(passport) {
     }));
 
 };
+
+
+// Center city
+// - Chinatown
+// - Ave of Arts
+// - CallowHIll
+// - French Quarter
+// - Logan Square
+// - Naval Square
+// - Market East
+
+// South Philly
+// - Grays ferry
+// - Central south philly
+// - Italian market
+// - East passyunk
+// - Little Saigon
+// - Marconi plaza 
+
+// West philadelphia
+// - Belmont district
+// - Cedar park 
+// - Cathedral park 
+// - Garden court
+// - Mill creek 

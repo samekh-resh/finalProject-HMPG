@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+    <title>Housing Post Feed</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav>
+    <h1>HOMEPAGE</h1>
+    <button><a href="/submitHousingPost">submit housing</a></button>
+    <button><a href="/submitTopic">submit topic</a></button>
+    <button><a href="/profile">profile</a></button>
+    <!-- <button><a href="/topicPost">go to invididual topic page</a></button>
+    <button><a href="/housingPost">go to individual post page</a></button> -->
+    <button><a href="/housingPostFeed">housingFeed</a></button>
+    <button><a href="/topicFeed">topicFeed</a></button>
+    <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+    <a href="/login" class="btn btn-default btn-sm">Login</a>
+  </nav>
+
+<div class="container">
+
+    <div class="page-header text-center">
+        <h2><span class="fa fa-home"></span> Housing Post Feed</h2>
+    </div>
+
+    <div class="holdingSector">
+      
+        <div class="feed">
+          <% for(var i=0; i<housingPosts.length; i++) {%>
+            <section class="individualPosting">
+              <h4>name : <%= housingPosts[i].userName %></h4>
+              <a href="/housingPost?id=<%=housingPosts[i]._id%>"><span><%= housingPosts[i].title %></span></a>
+              <p><%= housingPosts[i].neighborhood %></p>
+              
+              <span> datePostedBy: <%= housingPosts[i].datePostedBy %></span>
+              <span><i class="fa fa-save" aria-hidden="true"></i></span>
+              <% if ( housingPosts[i].userId.equals(user._id)) { %>
+                <span><i data-id="<%= housingPosts[i]._id %>" class="fa housing-trash fa-trash" aria-hidden="true"></i></span>
+              <% } %>
+            </section>
+
+         <% } %>
+        </div>
+         
+    </div>
+
+          <!-- so the profile section will have your saved housing posts, AND saved message board posts.  and other information to put in-->
+
+</div>
+
+<script src="main.js"></script>
+
+</body>
+</html>
