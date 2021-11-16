@@ -2,6 +2,7 @@
 
 // set up ======================================================================
 // get all the tools we need
+require('dotenv').config()
 var express  = require('express');
 var app      = express();
 var port     = process.env.PORT || 8081;
@@ -21,6 +22,7 @@ var configDB = require('./config/database.js');
 
 let db
 
+console.log(process.env, process.env.MONGOURL)
 // configuration ===============================================================
 mongoose.connect(configDB.url, (err, database) => {
   if (err) return console.log(err)

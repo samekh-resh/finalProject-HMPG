@@ -1,4 +1,6 @@
-# Rowlette
+# HOMEPAGE
+
+finding a home. on the same page. 
 
 **link to project**
 
