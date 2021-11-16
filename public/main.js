@@ -26,7 +26,7 @@ Array.from(thumbUp).forEach(function(element) {
       });
 });
 
-Array.from(trash).forEach(function(element) {
+Array.from(topicTrash).forEach(function(element) {
       element.addEventListener('click', function(){
       console.log(element.dataset.id)
         fetch('delete', {
