@@ -16,6 +16,18 @@ module.exports = function (app, passport, db, multer, ObjectId) {
   app.get('/', function (req, res) {
     res.render('index.ejs');
   });
+  // for save page
+  app.get('/save', isLoggedIn, function (req, res) {
+    db.collection('housingPost').find({
+      interestedUsers: ObjectId(req.user.id)
+    }).toArray((err, result) => {
+      if (err) return console.log(err)
+      res.render('saved.ejs', {
+        user: req.user,
+        housingPosts: result
+      });
+    });
+  })
 
   // PROFILE SECTION =========================
   app.get('/profile', isLoggedIn, function (req, res) {
@@ -39,7 +51,7 @@ module.exports = function (app, passport, db, multer, ObjectId) {
   app.get('/housingPostFeed', isLoggedIn, function (req, res) {
     //limit it to your zipcode asp
     console.log(req.user.zipcode)
-    db.collection('housingPost').find({zipcode: req.user.zipcode }).toArray((err, result) => {
+    db.collection('housingPost').find({ zipcode: req.user.zipcode }).toArray((err, result) => {
       if (err) return console.log(err)
       console.log(result)
       res.render('housingPostFeed.ejs', {
@@ -56,10 +68,10 @@ module.exports = function (app, passport, db, multer, ObjectId) {
 
   // get individual Housing Post=========================
   app.get('/housingPost', isLoggedIn, function (req, res) {
-    
+
     let postId = req.query.id
     console.log('postid =', postId, req)
-    db.collection('housingPost').findOne({_id: ObjectId(postId)}, (err, result) => {
+    db.collection('housingPost').findOne({ _id: ObjectId(postId) }, (err, result) => {
       if (err) return console.log(err)
       res.render('housingPost.ejs', {
         user: req.user,
@@ -91,7 +103,7 @@ module.exports = function (app, passport, db, multer, ObjectId) {
   app.get('/topicPost', isLoggedIn, function (req, res) {
     let postId = req.query.id
     console.log('postid =', postId, req)
-    db.collection('topic').findOne({_id: ObjectId(postId)}, (err, result) => {
+    db.collection('topic').findOne({ _id: ObjectId(postId) }, (err, result) => {
       if (err) return console.log(err)
       res.render('topicPost.ejs', {
         user: req.user,
@@ -120,14 +132,16 @@ module.exports = function (app, passport, db, multer, ObjectId) {
   // housing oist route board routes ===============================================================
 
   app.post('/topicPost', isLoggedIn, (req, res) => {
-    db.collection('topic').save({ userName: req.user.userName,
-      userId: req.user._id, 
-      zipcode: req.body.zipcode, 
-      city: req.body.city, 
+    db.collection('topic').save({
+      userName: req.user.userName,
+      userId: req.user._id,
+      zipcode: req.body.zipcode,
+      city: req.body.city,
       neighborhood: req.body.neighborhood,
-      title: req.body.title, 
-      aboutPosting: req.body.aboutPosting, 
-      datePostedBy: new Date(req.body.datePostedBy) }, (err, result) => {
+      title: req.body.title,
+      aboutPosting: req.body.aboutPosting,
+      datePostedBy: new Date(req.body.datePostedBy)
+    }, (err, result) => {
       if (err) return console.log(err)
       console.log('saved to database')
       res.redirect('/topicFeed')
@@ -139,15 +153,17 @@ module.exports = function (app, passport, db, multer, ObjectId) {
 
   app.post('/submitHousingPost', isLoggedIn, (req, res) => {
     console.log(req.user)
-    db.collection('housingPost').save({ userName: req.user.userName,
-      userId: req.user._id, 
-      zipcode: req.body.zipcode, 
-      city: req.body.city, 
+    db.collection('housingPost').save({
+      userName: req.user.userName,
+      userId: req.user._id,
+      zipcode: req.body.zipcode,
+      city: req.body.city,
       neighborhood: req.body.neighborhood,
-      title: req.body.title, 
-      housingType: req.body.housingType, 
-      aboutPosting: req.body.aboutPosting, 
-      datePostedBy: new Date(req.body.datePostedBy) }, (err, result) => {
+      title: req.body.title,
+      housingType: req.body.housingType,
+      aboutPosting: req.body.aboutPosting,
+      datePostedBy: new Date(req.body.datePostedBy)
+    }, (err, result) => {
       if (err) return console.log(err)
       console.log('saved to database')
       res.redirect('/housingPostFeed')
@@ -165,6 +181,25 @@ module.exports = function (app, passport, db, multer, ObjectId) {
       // this ejs file will haave to be the page where the post is individuall going to be shown. 
     })
   })
+  //saving housoing post
+
+  app.put('/saveHousing', isLoggedIn, (req, res) => {
+
+    db.collection('housingPost')
+      .findOneAndUpdate({ _id: ObjectId(req.body.postId) }, {
+        $addToSet: {
+          interestedUsers: ObjectId(req.user.id)
+        }
+      }, {
+        sort: { _id: -1 },
+        upsert: false
+      }, (err, result) => {
+        if (err) return res.send(err)
+        res.send(result)
+      })
+  })
+
+
 
   // app.put('/messages', (req, res) => {
   //   db.collection('messages')
@@ -181,15 +216,15 @@ module.exports = function (app, passport, db, multer, ObjectId) {
   //     })
   // })
 
-  app.delete('/delete', (req, res) => {
-    db.collection('topic').findOneAndDelete({ _id: ObjectId(req.body.id)}, (err, result) => {
+  app.delete('/delete', isLoggedIn, (req, res) => {
+    db.collection('topic').findOneAndDelete({ _id: ObjectId(req.body.id) }, (err, result) => {
       if (err) return res.send(500, err)
       res.send('Message deleted!')
     })
   })
 
-  app.delete('/deleteHousing', (req, res) => {
-    db.collection('housingPost').findOneAndDelete({ _id: ObjectId(req.body.id)}, (err, result) => {
+  app.delete('/deleteHousing', isLoggedIn, (req, res) => {
+    db.collection('housingPost').findOneAndDelete({ _id: ObjectId(req.body.id) }, (err, result) => {
       if (err) return res.send(500, err)
       res.send('Message deleted!')
     })
@@ -227,7 +262,7 @@ module.exports = function (app, passport, db, multer, ObjectId) {
     failureRedirect: '/signup', // redirect back to the signup page if there is an error
     failureFlash: true // allow flash messages
   }), function (req, res) { //doing more after passport creates req.user properties other than email and password
-    console.log('bday',req.body.birthDate)
+    console.log('bday', req.body.birthDate)
     db.collection('users')
       .findOneAndUpdate({ _id: req.user._id }, {
         $set: {
