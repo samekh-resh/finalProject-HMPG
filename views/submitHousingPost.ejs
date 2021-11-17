@@ -40,7 +40,7 @@
 
 
         <!-- LOGIN FORM -->
-        <form action="/submitHousingPost" method="post">
+        <form action="/submitHousingPost" enctype="multipart/form-data" method="post">
           <div class="form-group">
             <label>UserName</label>
             <input type="text" class="form-control" name='userName' value="<%= user.userName%>" />
@@ -90,6 +90,10 @@
           <div class="form-group">
             <label>a little about your posting?</label>
             <input type="text" class="form-control" name="aboutPosting" />
+          </div>
+          <div class="form-group">
+            <label>pictures</label>
+            <input type="file" name="file-to-upload" class="fileChose">
           </div>
           <div class="form-group">
             <label>date Posted By</label>

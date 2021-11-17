@@ -40,7 +40,7 @@
                 <span><%= topic[i].title %></span>
                 </a>
               <span> datePostedBy: <%= topic[i].datePostedBy %></span>
-              <span><i class="fa fa-save" aria-hidden="true"></i></span>
+              <span><i data-id="<%= topic[i]._id %>" class="fa save-topic fa-save" aria-hidden="true"></i></span>
 
               <% if ( topic[i].userId.equals(user._id)) { %>
               <span><i data-id="<%= topic[i]._id %>" class="fa topic-trash fa-trash" aria-hidden="true"></i></span>

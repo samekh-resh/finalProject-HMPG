@@ -56,34 +56,50 @@
             <table>
                 <tr>
                   <th>userName</th>
-                  <th>title</th>
+                  <th>housing status</th>
                   <th>datePostedBy</th>
-                  <th>msg</th>
-                  <th>likes/dislike</th>
-
                 </tr>
+
+                <% if (chatSubmitted[i].userId.equals(user._id)) {%> 
                 <tr>
                   <td><%= chatSubmitted[i].userName %></td>
-                  <td><%= chatSubmitted[i].title %></td>
+                  <td><%= chatSubmitted[i].housingStatus %></td>
                   <td><%= chatSubmitted[i].datePostedBy %></td>
-                  <td><%= chatSubmitted[i].msg %></td>
                   <td><span><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>
                     <span><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>
                     <span><i class="fa fa-trash" aria-hidden="true"></i></span></td>
                 </tr>
+
+                <% } %>
               </table>
           <% } %>
     
           <h6>submit your update</h6>
           <% if (user.local.email) { %>
-          <form action="/chatSubmitted" method="POST">
-            <input type="text" value="<%= user.userName %>" name="name">
+
+
+          <form action="/chatSubmitted" method="post">
             <input type="hidden" value="<%= user._id %>" name="userId">
-            <input type="text" placeholder="title" name="title">
-            <!-- make this an options tag with a select drop down with locations
-            <input type="text" placeholder="neighborhood" name="neighborhood"> -->
-            <input type="text" placeholder="message" name="msg">
-            <input type="date" placeholder="date posted by" name="datePostedBy">
+            <div class="form-group">
+              <label>name</label>
+              <input type="text" class="form-control" value="<%= user.userName %>" name="userName" />
+            </div>
+            <div class="form-group">
+              <label for="housingType">looking for housing?</label>
+  
+              <select name="housingStatus" id="housingStatus">
+                <option value="yes">yes</option>
+                <option value="no">no</option>
+                <option value="temporary">temporary</option>
+                <option value="short term">short term</option>
+                <option value="longterm">longterm</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>date Posted By</label>
+              <input type="date" class="form-control" name="datePostedBy" />
+            </div>
+            
             <button type="submit">Submit</button>
           </form>
         </div>

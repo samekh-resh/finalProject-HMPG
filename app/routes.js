@@ -1,7 +1,8 @@
-module.exports = function (app, passport, db, multer, ObjectId) {
+module.exports = function (app, passport, db, ObjectId) {
 
+  const multer = require('multer') 
   // Image Upload Code =========================================================================
-  var storage = multer.diskStorage({
+  const storage = multer.diskStorage({
     destination: (req, file, cb) => {
       cb(null, 'public/images/uploads')
     },
@@ -9,7 +10,7 @@ module.exports = function (app, passport, db, multer, ObjectId) {
       cb(null, file.fieldname + '-' + Date.now() + ".png")
     }
   });
-  var upload = multer({ storage: storage });
+  let upload = multer({ storage: storage });
   // normal routes ===============================================================
 
   // show the home page (will also have our login links)
@@ -151,7 +152,7 @@ module.exports = function (app, passport, db, multer, ObjectId) {
 
   // post route for housing post
 
-  app.post('/submitHousingPost', isLoggedIn, (req, res) => {
+  app.post('/submitHousingPost', isLoggedIn, upload.single('file-to-upload'), (req, res) => {
     console.log(req.user)
     db.collection('housingPost').save({
       userName: req.user.userName,
@@ -162,6 +163,7 @@ module.exports = function (app, passport, db, multer, ObjectId) {
       title: req.body.title,
       housingType: req.body.housingType,
       aboutPosting: req.body.aboutPosting,
+      img: 'images/uploads/' + req.file.filename,
       datePostedBy: new Date(req.body.datePostedBy)
     }, (err, result) => {
       if (err) return console.log(err)
@@ -174,7 +176,11 @@ module.exports = function (app, passport, db, multer, ObjectId) {
 
   app.post('/chatSubmitted', isLoggedIn, (req, res) => {
     console.log(req.user)
-    db.collection('chatSubmitted').save({ userName: req.user.userName, userId: req.user._id, title: req.body.title, msg: req.body.msg, datePostedBy: new Date(req.body.birthday) }, (err, result) => {
+    db.collection('chatSubmitted').save({ 
+      userId: req.user._id,
+      userName: req.user.userName,
+      housingStatus: req.body.housingStatus,
+      datePostedBy: new Date(req.body.datePostedBy) }, (err, result) => {
       if (err) return console.log(err)
       console.log('saved to database')
       res.redirect('/profile')
@@ -186,6 +192,23 @@ module.exports = function (app, passport, db, multer, ObjectId) {
   app.put('/saveHousing', isLoggedIn, (req, res) => {
 
     db.collection('housingPost')
+      .findOneAndUpdate({ _id: ObjectId(req.body.postId) }, {
+        $addToSet: {
+          interestedUsers: ObjectId(req.user.id)
+        }
+      }, {
+        sort: { _id: -1 },
+        upsert: false
+      }, (err, result) => {
+        if (err) return res.send(err)
+        res.send(result)
+      })
+  })
+  //saving topic post
+
+  app.put('/saveTopic', isLoggedIn, (req, res) => {
+
+    db.collection('topic')
       .findOneAndUpdate({ _id: ObjectId(req.body.postId) }, {
         $addToSet: {
           interestedUsers: ObjectId(req.user.id)

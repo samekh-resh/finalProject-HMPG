@@ -1,5 +1,6 @@
 var thumbUp = document.getElementsByClassName("fa-thumbs-up");
 var saveHousing = document.getElementsByClassName("save-housing");
+var saveTopic = document.getElementsByClassName("save-topic");
 var topicTrash = document.getElementsByClassName("topic-trash");
 var housingTrash = document.getElementsByClassName("housing-trash");
 
@@ -35,6 +36,29 @@ Array.from(saveHousing).forEach(function(element) {
         // const thumbUp = parseFloat(this.parentNode.parentNode.childNodes[5].innerText)
         console.log(element.dataset.id)
         fetch('saveHousing', {
+          method: 'put',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            postId: element.dataset.id
+          })
+        })
+        .then(response => {
+          if (response.ok) return response.json()
+        })
+        .then(data => {
+          console.log(data)
+          window.location.reload(true)
+        })
+      });
+});
+Array.from(saveTopic).forEach(function(element) {
+      element.addEventListener('click', function(){
+
+        // const name = this.parentNode.parentNode.childNodes[1].innerText
+        // const msg = this.parentNode.parentNode.childNodes[3].innerText
+        // const thumbUp = parseFloat(this.parentNode.parentNode.childNodes[5].innerText)
+        console.log(element.dataset.id)
+        fetch('saveTopic', {
           method: 'put',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({
