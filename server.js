@@ -21,12 +21,27 @@ var configDB = require('./config/database.js');
 
 let db
 
+const neighborhoods = ["Center City",
+  "South Philadelphia",
+  "Southwest Philadelphia",
+  "Lower North Philadelphia",
+  "West Philadelphia",
+  "Upper North Philadelphia",
+  "Port Richmond",
+  "Kensington",
+  "Roxborough-Manayunk",
+  "Germantown-Chestnut Hill",
+  "Olney-Oak Lane",
+  "Near Northeast Philadelphia",
+  "Far Northeast Philadelphia"]
+
+
 console.log(process.env, process.env.MONGOURL)
 // configuration ===============================================================
 mongoose.connect(configDB.url, (err, database) => {
   if (err) return console.log(err)
   db = database
-  require('./app/routes.js')(app, passport, db, ObjectId);
+  require('./app/routes.js')(app, passport, db, ObjectId, neighborhoods);
 }); // connect to our database
 
 require('./config/passport')(passport); // pass passport for configuration

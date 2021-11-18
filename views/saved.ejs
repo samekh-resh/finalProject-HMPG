@@ -25,12 +25,13 @@
 <div class="container">
 
     <div class="page-header text-center">
-        <h2><span class="fa fa-home"></span> Housing Post Feed</h2>
+        <h2><span class="fa fa-home"></span> SAVED POSTS!</h2>
     </div>
 
     <div class="holdingSector">
       
         <div class="feed">
+          <h2>saved Housing</h2>
           <% for(var i=0; i<housingPosts.length; i++) {%>
             <section class="individualPosting">
               <h4>name : <%= housingPosts[i].userName %></h4>
@@ -41,6 +42,24 @@
               <span><i data-id="<%= housingPosts[i]._id %>" class="fa save-housing fa-save" aria-hidden="true"></i></span>
               <% if ( housingPosts[i].userId.equals(user._id)) { %>
                 <span><i data-id="<%= housingPosts[i]._id %>" class="fa housing-trash fa-trash" aria-hidden="true"></i></span>
+              <% } %>
+            </section>
+
+         <% } %>
+
+
+        <div class="feed">
+          <h2>saved Topics</h2>
+          <% for(var i=0; i<topic.length; i++) {%>
+            <section class="individualPosting">
+              <h4>name : <%= topic[i].userName %></h4>
+              <a href="/housingPost?id=<%=topic[i]._id%>"><span><%= topic[i].title %></span></a>
+              <p><%= topic[i].neighborhood %></p>
+              
+              <span> datePostedBy: <%= topic[i].datePostedBy %></span>
+              <span><i data-id="<%= topic[i]._id %>" class="fa save-housing fa-save" aria-hidden="true"></i></span>
+              <% if ( topic[i].userId.equals(user._id)) { %>
+                <span><i data-id="<%= topic[i]._id %>" class="fa housing-trash fa-trash" aria-hidden="true"></i></span>
               <% } %>
             </section>
 

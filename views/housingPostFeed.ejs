@@ -28,17 +28,44 @@
         <h2><span class="fa fa-home"></span> Housing Post Feed</h2>
     </div>
 
+    <div>
+      <p>search by zipcode</p>
+      <form action="/zipcodes" method="post">
+        <label for="zipcodes">choose a zipCode</label>
+        <select name="zipcodes" id="zipcodes" multiple>
+          <option value="19145">19145</option>
+          <option value="19140">19140</option>
+          <option value="19050">19050</option>
+        </select>
+        <br><br>
+        <input type="submit" value="Submit">
+      </form>
+      
+      <p>search by neighborhood</p>
+    </div>
+
+    <!-- <label for="cars">Choose a car:</label>
+
+<select name="cars" id="cars" multiple>
+  <option value="volvo">Volvo</option>
+  <option value="saab">Saab</option>
+  <option value="opel">Opel</option>
+  <option value="audi">Audi</option>
+</select> -->
+
     <div class="holdingSector">
       
         <div class="feed">
           
           <% for(var i=0; i<housingPosts.length; i++) {%>
             <section class="individualPosting">
-              <h4>name : <%= housingPosts[i].userName %></h4>
+              <!-- <a href="/otherUserProfile/<%# housingPosts[i].userId%>"><h4>name : <%# housingPosts[i].userName %></h4></a> -->
+              <h4>name : <%= housingPosts[i].userName %></h4><
+              
               <a href="/housingPost?id=<%=housingPosts[i]._id%>"><span><%= housingPosts[i].title %></span></a>
               <p><%= housingPosts[i].neighborhood %></p>
               
-              <span> datePostedBy: <%= housingPosts[i].datePostedBy %></span>
+            <span> datePostedBy: <%= housingPosts[i].datePostedBy %></span>  
               <span><i data-id="<%= housingPosts[i]._id %>" class="fa save-housing fa-save" aria-hidden="true"></i></span>
               <% if ( housingPosts[i].userId.equals(user._id)) { %>
                 <span><i data-id="<%= housingPosts[i]._id %>" class="fa housing-trash fa-trash" aria-hidden="true"></i></span>

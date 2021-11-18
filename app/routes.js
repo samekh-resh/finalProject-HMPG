@@ -1,6 +1,6 @@
-module.exports = function (app, passport, db, ObjectId) {
+module.exports = function (app, passport, db, ObjectId, neighborhoods) {
 
-  const multer = require('multer') 
+  const multer = require('multer')
   // Image Upload Code =========================================================================
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -18,17 +18,38 @@ module.exports = function (app, passport, db, ObjectId) {
     res.render('index.ejs');
   });
   // for save page
-  app.get('/save', isLoggedIn, function (req, res) {
-    db.collection('housingPost').find({
-      interestedUsers: ObjectId(req.user.id)
-    }).toArray((err, result) => {
-      if (err) return console.log(err)
-      res.render('saved.ejs', {
-        user: req.user,
-        housingPosts: result
-      });
-    });
-  })
+  // app.get('/save', isLoggedIn, function (req, res) {
+  //   db.collection('housingPost').find({
+  //     interestedUsers: ObjectId(req.user.id)
+  //   }).toArray((err, result) => {
+  //     if (err) return console.log(err)
+  //     res.render('saved.ejs', {
+  //       user: req.user,
+  //       housingPosts: result
+  //     });
+  //   });
+  // })
+
+  app.get('/save', isLoggedIn, async function (req, res) {
+
+    //retrieving housing posts
+    const housingRes = await
+      db.collection('housingPost').find({
+        interestedUsers: ObjectId(req.user.id)
+      }).toArray();
+
+    //retrieving topics
+    const topicRes = await
+      db.collection('topic').find({
+        interestedUsers: ObjectId(req.user.id)
+      }).toArray();
+
+    res.render('saved.ejs', {
+      user: req.user,
+      housingPosts: housingRes,
+      topic: topicRes
+    })
+  });
 
   // PROFILE SECTION =========================
   app.get('/profile', isLoggedIn, function (req, res) {
@@ -42,11 +63,30 @@ module.exports = function (app, passport, db, ObjectId) {
     })
   });
 
+  // app.get('/otherUserProfile/:id', isLoggedIn, async function (req, res) {
+  //   console.log(req.params.id)
+  //   //retrieving housing posts
+  //   const userRes = await
+  //     db.collection('user').findOne({ _id: ObjectId(req.params.id) })
+
+  //   //retrieving topics
+  //   const chatRes = await
+  //     db.collection('chatSubmitted').findOne({ userId: ObjectId(req.params.id) })
+
+  //   res.render('otherUserProfile.ejs', {
+  //     user: userRes,
+  //     chat: chatRes,
+  //   })
+  // });
+
 
   // Submit Housing Post=========================
   app.get('/submitHousingPost', isLoggedIn, function (req, res) {
     res.render('submitHousingPost.ejs',
-      { user: req.user })
+      {
+        user: req.user,
+        neighborhoods: neighborhoods
+      })
   });
   // get the housing post feed =========================
   app.get('/housingPostFeed', isLoggedIn, function (req, res) {
@@ -61,6 +101,29 @@ module.exports = function (app, passport, db, ObjectId) {
       })
     })
   });
+
+  //post request for zipcodes
+  app.post('/zipcodes', isLoggedIn, (req, res) => {
+    console.log(req.body)
+    //the followign code is clean up 
+    // saying: if req.body.zipcodes is undefined, we will return an empty array, and IF it is defined, we will check to see if req.body.zipcodes is an array. if it is an array, we say; fine, let's just pass it through, however, if it is not one (for the edge case of one zipcode selected) we will make it an array but putting it in brackets and returning that. 
+    let zipcodes = req.body.zipcodes === undefined ? [] : Array.isArray(req.body.zipcodes) ? req.body.zipcodes : [req.body.zipcodes]
+    db.collection('housingPost').find(
+      {
+        zipcode: {
+          $in: zipcodes
+          //having one selection doesn't give us an array but having two gibes us an array, and the $in operator needs that 
+        }
+      }
+    ).toArray((err, result) => {
+      if (err) return console.log(err)
+      console.log(result)
+      res.render('housingPostFeed.ejs', {
+        user: req.user,
+        housingPosts: result
+      })
+    })
+  })
   // // get individual Housing Post=========================
   // app.get('/housingPost', isLoggedIn, function (req, res) {
   //   res.render('housingPost.ejs',
@@ -176,11 +239,12 @@ module.exports = function (app, passport, db, ObjectId) {
 
   app.post('/chatSubmitted', isLoggedIn, (req, res) => {
     console.log(req.user)
-    db.collection('chatSubmitted').save({ 
+    db.collection('chatSubmitted').save({
       userId: req.user._id,
       userName: req.user.userName,
       housingStatus: req.body.housingStatus,
-      datePostedBy: new Date(req.body.datePostedBy) }, (err, result) => {
+      datePostedBy: new Date(req.body.datePostedBy)
+    }, (err, result) => {
       if (err) return console.log(err)
       console.log('saved to database')
       res.redirect('/profile')
