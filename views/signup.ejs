@@ -45,6 +45,18 @@
             <label>city</label>
             <input type="text" class="form-control" name="city" />
           </div>
+          <div class="form-group">
+            <label for="neighborhood">Neighborhood</label>
+          
+            <select name="neighborhood" id="neighborhood" size="4">
+              <option selected disabled>neighborhood</option>
+              <!-- use this same block of code on the feeds and the sign in and topic page -->
+          <% for(let i = 0; i < neighborhoods.length; i++) {%>
+              <option value="<%= neighborhoods[i] %>"><%= neighborhoods[i] %></option>
+          <% }%>  
+          </select>
+         
+          </div>
           <!-- for zipcode -->
           <div class="form-group">
             <label>zipcode</label>

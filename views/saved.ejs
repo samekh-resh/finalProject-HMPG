@@ -53,7 +53,7 @@
           <% for(var i=0; i<topic.length; i++) {%>
             <section class="individualPosting">
               <h4>name : <%= topic[i].userName %></h4>
-              <a href="/housingPost?id=<%=topic[i]._id%>"><span><%= topic[i].title %></span></a>
+              <a href="/topicPost?id=<%=topic[i]._id%>"><span><%= topic[i].title %></span></a>
               <p><%= topic[i].neighborhood %></p>
               
               <span> datePostedBy: <%= topic[i].datePostedBy %></span>

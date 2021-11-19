@@ -1,10 +1,10 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-    <title>hmpg profile</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-    <link rel="stylesheet" href="style.css">
+    <head>
+        <title>hmpg profile</title>
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
@@ -42,11 +42,14 @@
 
           
                 <%# if (chat.userId.equals(user._id)) {%> 
-                <% if (chat && chat.userId) {%> 
+                
                 <tr>
-                  <td><%= chat.userName %></td>
-                  <td><%= chat.housingStatus %></td>
-                  <td><%= chat.datePostedBy %></td>
+                <% if (chat && chat.userId) {%>     
+                    <%# for(var i=0; i<chat.length; i++) {%>
+                    <td><%= chat.userName %></td>
+                    <td><%= chat.housingStatus %></td>
+                    <td><%= chat.datePostedBy %></td>
+                    <%# } %>
                   <!-- <td><span><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>
                     <span><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>
                     <span><i class="fa fa-trash" aria-hidden="true"></i></span></td>
@@ -57,7 +60,7 @@
     
 
           <!-- so the profile section will have your saved housing posts, AND saved message board posts.  and other information to put in-->
-    <script src="main.js"></script>
+    <script src="/main.js"></script>
 
 </body>
 </html>

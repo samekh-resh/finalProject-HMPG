@@ -63,21 +63,22 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods) {
     })
   });
 
-  // app.get('/otherUserProfile/:id', isLoggedIn, async function (req, res) {
-  //   console.log(req.params.id)
-  //   //retrieving housing posts
-  //   const userRes = await
-  //     db.collection('user').findOne({ _id: ObjectId(req.params.id) })
+  app.get('/otherUserProfile/:id', isLoggedIn, async function (req, res) {
+    console.log(req.params.id)
+    let id = new ObjectId(req.params.id)
+    //retrieving housing posts
+    const userRes = await
+    db.collection('users').findOne({ _id: id })
 
-  //   //retrieving topics
-  //   const chatRes = await
-  //     db.collection('chatSubmitted').findOne({ userId: ObjectId(req.params.id) })
-
-  //   res.render('otherUserProfile.ejs', {
-  //     user: userRes,
-  //     chat: chatRes,
-  //   })
-  // });
+    //retrieving topics
+    const chatRes = await
+    db.collection('chatSubmitted').findOne({ userId: id})
+    console.log(userRes, chatRes)
+    res.render('otherUserProfile.ejs', {
+      user: userRes,
+      chat: chatRes
+    })
+  });
 
 
   // Submit Housing Post=========================
@@ -137,23 +138,43 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods) {
     console.log('postid =', postId, req)
     db.collection('housingPost').findOne({ _id: ObjectId(postId) }, (err, result) => {
       if (err) return console.log(err)
-      res.render('housingPost.ejs', {
-        user: req.user,
-        housingPost: result
+      db.collection('comments').find({ postId: ObjectId(postId) }).toArray((err, comments) => {
+        if (err) return console.log(err)
+        console.log(result)
+        res.render('housingPost.ejs', {
+          comments: comments,
+          user: req.user,
+          housingPost: result
+        })
       })
     })
   });
 
+   // comments for housing posts routes
+   app.post('/makeComment/:id', (req, res) => {
+    let user = req.user.userName
+    db.collection('comments').save({ comment: req.body.comment, postedBy: user, postedById: req.user._id, postId: ObjectId(req.params.id) }, (err, result) => {
+      if (err) return console.log(err)
+      console.log('saved to database')
+      res.redirect(`/housingPost?id=${req.params.id}`)
+    })
+  })
+   app.post('/makeCommentTopic/:id', (req, res) => {
+    let user = req.user.userName
+    db.collection('comments').save({ comment: req.body.comment, postedBy: user, postedById: req.user._id, postId: ObjectId(req.params.id) }, (err, result) => {
+      if (err) return console.log(err)
+      console.log('saved to database')
+      res.redirect(`/topicPost?id=${req.params.id}`)
+    })
+  })
+
   // Submit Topic=========================
   app.get('/submitTopic', isLoggedIn, function (req, res) {
     res.render('submitTopic.ejs',
-      { user: req.user })
+      { user: req.user,
+        neighborhoods: neighborhoods })
   });
-  // get topic page=========================
-  // app.get('/topicPost', isLoggedIn, function (req, res) {
-  //   res.render('topicPost.ejs',
-  //     { user: req.user })
-  // });
+
   // get topic page=========================
   app.get('/topicFeed', isLoggedIn, function (req, res) {
     db.collection('topic').find().toArray((err, result) => {
@@ -164,34 +185,30 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods) {
       })
     })
   });
+
   app.get('/topicPost', isLoggedIn, function (req, res) {
+
     let postId = req.query.id
     console.log('postid =', postId, req)
     db.collection('topic').findOne({ _id: ObjectId(postId) }, (err, result) => {
       if (err) return console.log(err)
-      res.render('topicPost.ejs', {
-        user: req.user,
-        topic: result
+      db.collection('comments').find({ postId: ObjectId(postId) }).toArray((err, comments) => {
+        if (err) return console.log(err)
+        console.log(result)
+        res.render('topicPost.ejs', {
+          comments: comments,
+          user: req.user,
+          topic: result
+        })
       })
     })
   });
-  //make topic post feed
+  
   // LOGOUT ==============================
   app.get('/logout', function (req, res) {
     req.logout();
     res.redirect('/');
   });
-
-  //chat postings
-
-  //  app.post('/chatSubmitted', (req, res) => {
-  //     db.collection('chatSubmitted').save({ name: req.body.name, title: req.body.title, msg: req.body.msg, datePostedBy: new Date(req.body.datPostdBy), neighborhood: req.body.neighborhood, thumbUp: 0, thumbDown: 0 }, (err, result) => {
-  //       if (err) return console.log(err)
-  //       console.log('saved to database')
-  //       res.redirect('/profile')
-  //       // this ejs file will haave to be the page where the post is individuall going to be shown. 
-  //     })
-  //   })
 
   // housing oist route board routes ===============================================================
 
@@ -339,7 +356,9 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods) {
   // SIGNUP =================================
   // show the signup form
   app.get('/signup', function (req, res) {
-    res.render('signup.ejs', { message: req.flash('signupMessage') });
+    res.render('signup.ejs', 
+    { message: req.flash('signupMessage'),
+      neighborhoods: neighborhoods });
   });
 
   // process the signup form
@@ -349,7 +368,7 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods) {
     failureRedirect: '/signup', // redirect back to the signup page if there is an error
     failureFlash: true // allow flash messages
   }), function (req, res) { //doing more after passport creates req.user properties other than email and password
-    console.log('bday', req.body.birthDate)
+    console.log('bday', req.body)
     db.collection('users')
       .findOneAndUpdate({ _id: req.user._id }, {
         $set: {
@@ -358,6 +377,7 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods) {
           lastName: req.body.lastName,
           address: req.body.address,
           city: req.body.city,
+          neighborhood: req.body.neighborhood,
           zipcode: req.body.zipcode,
           state: req.body.state,
           birthDate: new Date(req.body.birthDate)

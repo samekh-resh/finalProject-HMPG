@@ -49,21 +49,11 @@
             <div class="form-group">
               <label for="neighborhood">Neighborhood</label>
             
-              <select name="neighborhood" id="neighborhood">
+              <select name="neighborhood" id="neighborhood" size="4">
                 <option selected disabled>neighborhood</option>
-                <option value="Center City">Center City</option>
-                <option value="South Philadelphia">South Philadelphia</option>
-                <option value="Southwest Philadelphia">Southwest Philadelphia</option>
-                <option value="Lower North Philadelphia">Lower North Philadelphia</option>
-                <option value="West Philadelphia">West Philadelphia</option>
-                <option value="Upper North Philadelphia">Upper North Philadelphia</option>
-                <option value="Port Richmond">Port Richmond</option>
-                <option value="Kensington">Kensington</option>
-                <option value="Roxborough-Manayunk">Roxborough-Manayunk</option>
-                <option value="Germantown-Chestnut Hill">Germantown-Chestnut Hill</option>
-                <option value="Olney-Oak Lane">Olney-Oak Lane</option>
-                <option value="Near Northeast Philadelphia">Near Northeast Philadelphia</option>
-                <option value="Far Northeast Philadelphia">Far Northeast Philadelphia</option>
+                <% for(let i = 0; i < neighborhoods.length; i++) {%>
+                  <option value="<%= neighborhoods[i] %>"><%= neighborhoods[i] %></option>
+                <% }%>  
               </select>
             </div>
             <div class="form-group">

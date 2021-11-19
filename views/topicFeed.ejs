@@ -35,7 +35,7 @@
 
           <% for(var i=0; i<topic.length; i++) {%>
             <section class='individualPosting'>
-              <h4><%= topic[i].userName %></h4>
+              <a href="/otherUserProfile/<%= topic[i].userId %>"><h4><%= topic[i].userName %></h4></a>
               <a href="/topicPost?id=<%= topic[i]._id%>">
                 <span><%= topic[i].title %></span>
                 </a>

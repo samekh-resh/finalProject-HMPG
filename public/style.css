@@ -72,6 +72,14 @@ ul{
   width: 50%;
   margin:auto;
 }
+
+.commentSec{
+  background: rgba(255, 255, 255, 0.774);
+  padding: 3%;
+  color: black;
+  width: 50%;
+  margin:auto;
+}
 .profileBlock{
   background: rgba(255, 255, 255, 0.774);
   padding: 3%;
@@ -113,6 +121,7 @@ ul{
   width: 50%;
 }
 /* spacing */
+ 
 
 table {
   table-layout: fixed;
