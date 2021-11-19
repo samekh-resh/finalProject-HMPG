@@ -60,7 +60,7 @@
           <% for(var i=0; i<housingPosts.length; i++) {%>
             <section class="individualPosting">
               <!-- <a href="/otherUserProfile/<%# housingPosts[i].userId%>"><h4>name : <%# housingPosts[i].userName %></h4></a> -->
-              <h4>name : <%= housingPosts[i].userName %></h4><
+              <h4>name : <%= housingPosts[i].userName %></h4>
               
               <a href="/housingPost?id=<%=housingPosts[i]._id%>"><span><%= housingPosts[i].title %></span></a>
               <p><%= housingPosts[i].neighborhood %></p>
