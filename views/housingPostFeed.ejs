@@ -11,15 +11,14 @@
 
   <nav>
     <h1>HOMEPAGE</h1>
-    <button><a href="/submitHousingPost">submit housing</a></button>
-    <button><a href="/submitTopic">submit topic</a></button>
-    <button><a href="/profile">profile</a></button>
-    <!-- <button><a href="/topicPost">go to invididual topic page</a></button>
-    <button><a href="/housingPost">go to individual post page</a></button> -->
-    <button><a href="/housingPostFeed">housingFeed</a></button>
-    <button><a href="/topicFeed">topicFeed</a></button>
-    <a href="/logout" class="btn btn-default btn-sm">Logout</a>
-    <a href="/login" class="btn btn-default btn-sm">Login</a>
+    <a href="/submitHousingPost">submit housing</a> 
+    <a href="/submitTopic">submit topic</a> 
+    <a href="/profile">profile</a> 
+    <a href="/housingPostFeed">housingFeed</a> 
+    <a href="/topicFeed">topicFeed</a> 
+    <a href="/logout" >Logout</a>
+    <a href="/save" >savedPage</a>
+    <a href="/login" >Login</a>
   </nav>
 
 <div class="container">
@@ -32,10 +31,12 @@
       <p>search by zipcode</p>
       <form action="/zipcodes" method="post">
         <label for="zipcodes">choose a zipCode</label>
-        <select name="zipcodes" id="zipcodes" multiple>
-          <option value="19145">19145</option>
-          <option value="19140">19140</option>
-          <option value="19050">19050</option>
+          <select name="zipcodes" id="zipcodes" size="4" multiple>
+            <option selected disabled>neighborhood</option>
+            <!-- use this same block of code on the feeds and the sign in and topic page -->
+          <% for(let i = 0; i < zipcodes.length; i++) {%>
+            <option value="<%= zipcodes[i] %>"><%= zipcodes[i] %></option>
+          <% }%>  
         </select>
         <br><br>
         <input type="submit" value="Submit">
@@ -65,7 +66,8 @@
               <a href="/housingPost?id=<%=housingPosts[i]._id%>"><span><%= housingPosts[i].title %></span></a>
               <p><%= housingPosts[i].neighborhood %></p>
               
-            <span> datePostedBy: <%= housingPosts[i].datePostedBy %></span>  
+              <% let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }; %>
+              <p><%= housingPosts[i].datePostedBy.toLocaleDateString("en-US", options)  %></p>  
               <span><i data-id="<%= housingPosts[i]._id %>" class="fa save-housing fa-save" aria-hidden="true"></i></span>
               <% if ( housingPosts[i].userId.equals(user._id)) { %>
                 <span><i data-id="<%= housingPosts[i]._id %>" class="fa housing-trash fa-trash" aria-hidden="true"></i></span>

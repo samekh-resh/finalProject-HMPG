@@ -11,15 +11,14 @@
 
   <nav>
     <h1>HOMEPAGE</h1>
-    <button><a href="/submitHousingPost">submit housing</a></button>
-    <button><a href="/submitTopic">submit topic</a></button>
-    <button><a href="/profile">profile</a></button>
-    <!-- <button><a href="/topicPost">go to invididual topic page</a></button>
-    <button><a href="/housingPost">go to individual post page</a></button> -->
-    <button><a href="/housingPostFeed">housingFeed</a></button>
-    <button><a href="/topicFeed">topicFeed</a></button>
-    <a href="/logout" class="btn btn-default btn-sm">Logout</a>
-    <a href="/login" class="btn btn-default btn-sm">Login</a>
+    <a href="/submitHousingPost">submit housing</a> 
+    <a href="/submitTopic">submit topic</a> 
+    <a href="/profile">profile</a> 
+    <a href="/housingPostFeed">housingFeed</a> 
+    <a href="/topicFeed">topicFeed</a> 
+    <a href="/logout" >Logout</a>
+    <a href="/save" >savedPage</a>
+    <a href="/login" >Login</a>
   </nav>
 <div class="container">
 
@@ -39,7 +38,8 @@
               <a href="/topicPost?id=<%= topic[i]._id%>">
                 <span><%= topic[i].title %></span>
                 </a>
-              <span> datePostedBy: <%= topic[i].datePostedBy %></span>
+                <% let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }; %>
+                <p><%= topic[i].datePostedBy.toLocaleDateString("en-US", options)  %></p>
               <span><i data-id="<%= topic[i]._id %>" class="fa save-topic fa-save" aria-hidden="true"></i></span>
 
               <% if ( topic[i].userId.equals(user._id)) { %>

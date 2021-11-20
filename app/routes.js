@@ -1,4 +1,4 @@
-module.exports = function (app, passport, db, ObjectId, neighborhoods) {
+module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes) {
 
   const multer = require('multer')
   // Image Upload Code =========================================================================
@@ -54,13 +54,19 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods) {
   // PROFILE SECTION =========================
   app.get('/profile', isLoggedIn, function (req, res) {
     //at some point, we need to be finding from the database that shows the saved posts and topcis of each user, but for now it will jsut find the postings. 
-    db.collection('chatSubmitted').find().toArray((err, result) => {
+    console.log('hopefully' , req.user)
+    db.collection('chatSubmitted').findOne( {userId: ObjectId(req.user._id)},(err, result) => {
+      // console.log(result._)
       if (err) return console.log(err)
+      
       res.render('profile.ejs', {
         user: req.user,
-        chatSubmitted: result
+        chatSubmitted: result ? result : {userId: 0}
       })
+      //  console.log(req.user._id)
+      // console.log(chatSubmitted)
     })
+   
   });
 
   app.get('/otherUserProfile/:id', isLoggedIn, async function (req, res) {
@@ -98,7 +104,9 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods) {
       console.log(result)
       res.render('housingPostFeed.ejs', {
         user: req.user,
-        housingPosts: result
+        housingPosts: result,
+        neighborhoods: neighborhoods,
+        zipcodes: zipcodes
       })
     })
   });
@@ -121,7 +129,9 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods) {
       console.log(result)
       res.render('housingPostFeed.ejs', {
         user: req.user,
-        housingPosts: result
+        housingPosts: result,
+        neighborhoods: neighborhoods,
+        zipcodes: zipcodes
       })
     })
   })
@@ -181,7 +191,9 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods) {
       if (err) return console.log(err)
       res.render('topicFeed.ejs', {
         user: req.user,
-        topic: result
+        topic: result,
+        neighborhoods: neighborhoods,
+        zipcodes: zipcodes
       })
     })
   });
@@ -243,8 +255,8 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods) {
       title: req.body.title,
       housingType: req.body.housingType,
       aboutPosting: req.body.aboutPosting,
-      img: 'images/uploads/' + req.file.filename,
-      datePostedBy: new Date(req.body.datePostedBy)
+      img: req.file ? 'images/uploads/' + req.file.filename : null,
+      datePostedBy: new Date(req.body.datePostedBy) 
     }, (err, result) => {
       if (err) return console.log(err)
       console.log('saved to database')
@@ -358,7 +370,8 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods) {
   app.get('/signup', function (req, res) {
     res.render('signup.ejs', 
     { message: req.flash('signupMessage'),
-      neighborhoods: neighborhoods });
+      neighborhoods: neighborhoods, 
+      zipcodes: zipcodes });
   });
 
   // process the signup form

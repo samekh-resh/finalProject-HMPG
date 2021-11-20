@@ -12,20 +12,22 @@
 <body>
     
 </body>
-    <nav>
-        <h1>HOMEPAGE</h1>
-        <button><a href="/submitHousingPost">submit housing</a></button>
-        <button><a href="/submitTopic">submit topic</a></button>
-        <button><a href="/profile">profile</a></button>
-        <!-- <button><a href="/topicPost">go to invididual topic page</a></button>
-        <button><a href="/housingPost">go to individual post page</a></button> -->
-        <button><a href="/housingPostFeed">housingFeed</a></button>
-        <button><a href="/topicFeed">topicFeed</a></button>
-    </nav>
+<nav>
+    <h1>HOMEPAGE</h1>
+    <a href="/submitHousingPost">submit housing</a> 
+    <a href="/submitTopic">submit topic</a> 
+    <a href="/profile">profile</a> 
+    <a href="/housingPostFeed">housingFeed</a> 
+    <a href="/topicFeed">topicFeed</a> 
+    <a href="/logout" >Logout</a>
+    <a href="/save" >savedPage</a>
+    <a href="/login" >Login</a>
+  </nav>
         <section class='title'>
             <p>titled :</p>
             <h2><%= topic.title %></h2>
-            <p><%= topic.datePostedBy %></p>
+            <% var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }; %>
+            <p><%= topic.datePostedBy.toLocaleDateString("en-US", options) %></p>
         </section>
 
     <div class='infoSec'>
@@ -33,7 +35,7 @@
         <h4>name : <%= topic.userName %></h4>
         <h4>titled : <%= topic.zipcode %></h4>
         <h5> Neighborhood: <%= topic.neighborhood %></h5>
-        <h5> msg: <%= topic.aboutPosting %></h5>
+        <h5> about posting: <%= topic.aboutPosting %></h5>
         <h5> <%= topic.thumbUp %></h5>
    
         <span><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>

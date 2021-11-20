@@ -13,6 +13,17 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <nav>
+      <h1>HOMEPAGE</h1>
+      <a href="/submitHousingPost">submit housing</a> 
+      <a href="/submitTopic">submit topic</a> 
+      <a href="/profile">profile</a> 
+      <a href="/housingPostFeed">housingFeed</a> 
+      <a href="/topicFeed">topicFeed</a> 
+      <a href="/logout" >Logout</a>
+      <a href="/save" >savedPage</a>
+      <a href="/login" >Login</a>
+    </nav>
     <div class="container">
       <div class="col-sm-6 col-sm-offset-3">
         <h1><span class="fa fa-sign-in"></span> Signup</h1>
@@ -60,7 +71,12 @@
           <!-- for zipcode -->
           <div class="form-group">
             <label>zipcode</label>
-            <input type="text" class="form-control" name="zipcode" />
+            <select name="zipcode" id="zipcode" size="4">
+              <option selected disabled>neighborhood</option>
+              <!-- use this same block of code on the feeds and the sign in and topic page -->
+          <% for(let i = 0; i < zipcodes.length; i++) {%>
+              <option value="<%= zipcodes[i] %>"><%= zipcodes[i] %></option>
+          <% }%>  
           </div>
           <!-- for state -->
           <div class="form-group">
