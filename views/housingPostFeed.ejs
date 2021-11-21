@@ -32,7 +32,7 @@
       <form action="/zipcodes" method="post">
         <label for="zipcodes">choose a zipCode</label>
           <select name="zipcodes" id="zipcodes" size="4" multiple>
-            <option selected disabled>neighborhood</option>
+            <option selected disabled>zipcode</option>
             <!-- use this same block of code on the feeds and the sign in and topic page -->
           <% for(let i = 0; i < zipcodes.length; i++) {%>
             <option value="<%= zipcodes[i] %>"><%= zipcodes[i] %></option>

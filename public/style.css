@@ -1,7 +1,7 @@
 body{
   word-wrap:break-word;
-  background: url(/img/pic3.jpg);
-  background-size: cover;
+  /* background: url(/img/pic3.jpg);
+  background-size: cover; */
 }
 
 a{
@@ -55,14 +55,14 @@ ul{
   padding: 0;
   list-style-type: none;
 }
-.container{
+/* .container{
   background: rgba(0, 0, 0, 0.582);
   width: 600px;
   color: rgb(230, 178, 178);
   border-radius: 2px;
   margin-bottom: 5%;
   text-align: center;
-}
+} */
 
 .standard{
   color: black;
@@ -74,7 +74,24 @@ ul{
 }
 
 .row{
-  width: 500px;
+  width: 600px;
+  color: rgb(230, 178, 178);
+  
+  margin-bottom: 5%;
+  text-align: center;
+}
+
+.newBtn{
+  border: black solid 22px;
+}
+
+.col{
+  border:2px solid black;
+  padding:3%;
+  margin: 5%;
+  background: rgb(255, 255, 255);
+  border-radius: 10px;
+  box-shadow: -32px 42px 37px 5px rgba(0,0,0,0.22);
 }
 
 .infoSec{
@@ -107,11 +124,11 @@ ul{
   background: rgb(255, 255, 255);
   border-radius: 15px;
   padding: 3%;
-  color: black;
-  width: 50%;
+
+  width: 55%;
   margin:auto;
-  margin-bottom: 2%;
-  padding: 2%;
+  /* margin-bottom: 2%;
+  padding: 2%; */
 }
 
 .submitStatus{

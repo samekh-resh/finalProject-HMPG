@@ -92,7 +92,8 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
     res.render('submitHousingPost.ejs',
       {
         user: req.user,
-        neighborhoods: neighborhoods
+        neighborhoods: neighborhoods,
+        zipcodes: zipcodes
       })
   });
   // get the housing post feed =========================
@@ -116,11 +117,11 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
     console.log(req.body)
     //the followign code is clean up 
     // saying: if req.body.zipcodes is undefined, we will return an empty array, and IF it is defined, we will check to see if req.body.zipcodes is an array. if it is an array, we say; fine, let's just pass it through, however, if it is not one (for the edge case of one zipcode selected) we will make it an array but putting it in brackets and returning that. 
-    let zipcodes = req.body.zipcodes === undefined ? [] : Array.isArray(req.body.zipcodes) ? req.body.zipcodes : [req.body.zipcodes]
+    let zipcodeSearch = req.body.zipcodes === undefined ? [] : Array.isArray(req.body.zipcodes) ? req.body.zipcodes : [req.body.zipcodes]
     db.collection('housingPost').find(
       {
         zipcode: {
-          $in: zipcodes
+          $in: zipcodeSearch
           //having one selection doesn't give us an array but having two gibes us an array, and the $in operator needs that 
         }
       }

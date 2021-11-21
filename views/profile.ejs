@@ -4,6 +4,8 @@
     <title>hmpg profile</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> 
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,12 +20,11 @@
     <a href="/save" >savedPage</a>
     <a href="/login" >Login</a>
   </nav>
-    <!-- chats will be changed to user posts and info like reach out if you need help with housing or whatever? -->
 
     
 
 
-        <div class="profileBlock text-center">
+  <div class="profileBlock text-center">
            <div>
               <h2><span class="fa fa-id-badge"></span> Profile </h2>
           </div> 
@@ -39,32 +40,32 @@
                 <a href="/connect/local" class="btn btn-default">Connect Local</a>
             <% } %>
 
-        </div>
+  </div>
 
-
-        <div class="userStatus">
+<!-- get all the boxes to center the page, round the edges of the boxes -->
+        <div class="container userStatus">
           <h6>chats for the day!</h6>
-          <%# for(var i=0; i<chatSubmitted.length; i++) {%>
+              
+                <% if(chatSubmitted.userId) {%>
 
-            <table>
-                <tr>
-                  <th>userName</th>
-                  <th>housing status</th>
-                  <th>datePostedBy</th>
-                </tr>
-              <% if(chatSubmitted.userId) {%>
                 <% console.log(chatSubmitted.userId) %>
                 <% if (chatSubmitted.userId.equals(user._id)  ) {%> 
-                <tr>
-                  <td><%= chatSubmitted.userName %></td>
-                  <td><%= chatSubmitted.housingStatus %></td>
-                  <% let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }; %>
-                  <td><%= chatSubmitted.datePostedBy.toLocaleDateString("en-US", options) %></td>
-                  <!-- <td><span><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>
-                    <span><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>
-                    <span><i class="fa fa-trash" aria-hidden="true"></i></span></td>-->
-                </tr> 
 
+                <div class="row">
+                   <section class="col">
+                    <label>userName</label>
+                     <p><%= chatSubmitted.userName %></p> </section>
+                   <section class="col">
+                    <label>housing status</label>
+                     <p><%= chatSubmitted.housingStatus %></p> </section>
+                  <% let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }; %>
+                   <section class="col">
+                    <label>datePostedBy</label>
+                     <p><%= chatSubmitted.datePostedBy.toLocaleDateString("en-US", options) %></p> </section>
+                  <!--  <section></p><span><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>
+                    <span><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>
+                    <span><i class="fa fa-trash" aria-hidden="true"></i></span></p> </section>-->
+                </div>
                 <% } %>
               
                   <!-- <p>you've added nothing</p> -->
@@ -73,22 +74,19 @@
                 <p>you've entered nothing</p>
                 
                 <% } %>
-              </table>
-    
-        </div>
 
-        <div class="submitStatus">
-          <h6>submit your update</h6>
+
+               <h6>submit your update</h6>
           <% if (user.local.email) { %>
 
 
-          <form action="/chatSubmitted" method="post">
+          <form class="row" action="/chatSubmitted" method="post">
             <input type="hidden" value="<%= user._id %>" name="userId">
-            <div class="nameProfile form-group">
+            <div class=" col nameProfile form-group">
               <label>name</label>
               <input type="text" class="form-control" value="<%= user.userName %>" name="userName" />
             </div>
-            <div class="housingStatus form-group">
+            <div class=" col housingStatus form-group">
               <label for="housingType">looking for housing?</label>
   
               <select name="housingStatus" id="housingStatus">
@@ -99,16 +97,21 @@
                 <option value="longterm">longterm</option>
               </select>
             </div>
-            <div class="datePosted form-group">
+            <div class=" col datePosted form-group">
               <label>date Posted By</label>
               <input type="date" class="form-control" name="datePostedBy" />
             </div>
             
-            <button type="submit">Submit</button>
+            
           </form>
+    <button type="submit">Submit</button>
+        </div>
+<!-- 
+        <div class="container submitStatus"> -->
+       
         
         <% } %>
-        </div>
+        <!-- </div> -->
 
           <!-- so the profile section will have your saved housing posts, AND saved message board posts.  and other information to put in-->
     <script src="main.js"></script>
