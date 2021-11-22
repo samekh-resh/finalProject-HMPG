@@ -33,16 +33,22 @@
         <div class="well">
           <form action="/topicPost" method="POST">
             <div class="form-group">
-              <label>UserName</label>
-              <input type="text" class="form-control" name='userName' value="<%= user.userName%>" />
+              <label for="userName">UserName</label>
+              <input type="text" class="form-control" name="userName" value="<%= user.userName%>" />
               <input type="hidden" value="<%= user._id %>" name="userId">
             </div>
             <div class="form-group">
-              <label>zipcode</label>
-              <input type="text" class="form-control" name="zipcode" />
+              <label for="zipcode">zipcode</label>
+              <select name="zipcode" id="zipcode" size="4">
+                <option selected disabled>neighborhood</option>
+                  <!-- use this same block of code on the feeds and the sign in and topic page -->
+                  <% for(let i = 0; i < zipcodes.length; i++) {%>
+                <option value="<%= zipcodes[i] %>"><%= zipcodes[i] %></option>
+                  <% }%>  
+              </select>
             </div>
             <div class="form-group">
-              <label>city</label>
+              <label for="city">city</label>
               <input type="text" class="form-control" name="city" />
             </div>
             <div class="form-group">
@@ -56,15 +62,15 @@
               </select>
             </div>
             <div class="form-group">
-              <label>Title</label>
+              <label for="title">Title</label>
               <input type="text" class="form-control" name="title" />
             </div>
             <div class="form-group">
-              <label>a little about your posting?</label>
+              <label for="aboutPosting">a little about your posting?</label>
               <input type="text" class="form-control" name="aboutPosting" />
             </div>
             <div class="form-group">
-              <label>date Posted By</label>
+              <label for="datePostedBy">date Posted By</label>
               <input type="date" class="form-control" name="datePostedBy" />
             </div>
     
@@ -72,20 +78,6 @@
           </form>
         </div>
 
-
-      
-      
-        <button><a href="/profile">profile</a></button>
-        <button><a href="/submitTopic">submit a topic</a></button>
-
-        <!-- <div class='well'>
-          <button><a href="/submitHousingPost">housing post</a></button>
-          <button><a href="/submitTopic">topic submission</a></button>
-          <button><a href="/topicPost">go to invididual topic page</a></button>
-          <button><a href="/housingPost">go to individual post page</a></button>
-          <button><a href="/housingPostFeed">go to post feed</a></button>
-          <button><a href="/topicFeed">go to topic feed</a></button>
-      </div> -->
     </div>
   </body>
 </html>

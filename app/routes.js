@@ -112,16 +112,43 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
     })
   });
 
-  //post request for zipcodes
-  app.post('/zipcodes', isLoggedIn, (req, res) => {
+  //post request for zipcodes for topic posts
+  app.post('/zipcodesTopic', isLoggedIn, (req, res) => {
     console.log(req.body)
-    //the followign code is clean up 
+    //the following code is clean up 
     // saying: if req.body.zipcodes is undefined, we will return an empty array, and IF it is defined, we will check to see if req.body.zipcodes is an array. if it is an array, we say; fine, let's just pass it through, however, if it is not one (for the edge case of one zipcode selected) we will make it an array but putting it in brackets and returning that. 
-    let zipcodeSearch = req.body.zipcodes === undefined ? [] : Array.isArray(req.body.zipcodes) ? req.body.zipcodes : [req.body.zipcodes]
+    let zipcodeSearch = req.body.zipcodesTopic === undefined ? [] : Array.isArray(req.body.zipcodesTopic) ? req.body.zipcodesTopic : [req.body.zipcodesTopic]
+    db.collection('topic').find(
+      {
+        zipcode: {
+          $in: zipcodeSearch
+          //had to change this naming because it was interfering
+          //having one selection doesn't give us an array but having two gibes us an array, and the $in operator needs that 
+        }
+      }
+    ).toArray((err, result) => {
+      if (err) return console.log(err)
+      console.log(result)
+      res.render('topicFeed.ejs', {
+        user: req.user,
+        topic: result,
+        neighborhoods: neighborhoods,
+        zipcodes: zipcodes
+      })
+    })
+  })
+
+  //post for getting zipcodes for housing posts
+  app.post('/zipcodesHousing', isLoggedIn, (req, res) => {
+    console.log(req.body)
+    //the following code is clean up 
+    // saying: if req.body.zipcodes is undefined, we will return an empty array, and IF it is defined, we will check to see if req.body.zipcodes is an array. if it is an array, we say; fine, let's just pass it through, however, if it is not one (for the edge case of one zipcode selected) we will make it an array but putting it in brackets and returning that. 
+    let zipcodeSearch = req.body.zipcodesHousing === undefined ? [] : Array.isArray(req.body.zipcodesHousing) ? req.body.zipcodesHousing : [req.body.zipcodesHousing]
     db.collection('housingPost').find(
       {
         zipcode: {
           $in: zipcodeSearch
+          //had to change this naming because it was interfering
           //having one selection doesn't give us an array but having two gibes us an array, and the $in operator needs that 
         }
       }
@@ -136,11 +163,58 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
       })
     })
   })
-  // // get individual Housing Post=========================
-  // app.get('/housingPost', isLoggedIn, function (req, res) {
-  //   res.render('housingPost.ejs',
-  //     { user: req.user })
-  // });
+
+  // route to get posts via neighborhoods for housing
+  app.post('/neighorhoodsHousing', isLoggedIn, (req, res) => {
+    console.log(req.body)
+    //the following code is clean up 
+    // saying: if req.body.zipcodes is undefined, we will return an empty array, and IF it is defined, we will check to see if req.body.zipcodes is an array. if it is an array, we say; fine, let's just pass it through, however, if it is not one (for the edge case of one zipcode selected) we will make it an array but putting it in brackets and returning that. 
+    let neighborhoodSearch = req.body.neighorhoodsHousing === undefined ? [] : Array.isArray(req.body.neighorhoodsHousing) ? req.body.neighorhoodsHousing : [req.body.neighorhoodsHousing]
+    db.collection('housingPost').find(
+      {
+        neighborhood: {
+          $in: neighborhoodSearch
+          //had to change this naming because it was interfering
+          //having one selection doesn't give us an array but having two gibes us an array, and the $in operator needs that 
+        }
+      }
+    ).toArray((err, result) => {
+      if (err) return console.log(err)
+      console.log(result)
+      res.render('housingPostFeed.ejs', {
+        user: req.user,
+        housingPosts: result,
+        neighborhoods: neighborhoods,
+        zipcodes: zipcodes
+      })
+    })
+  })
+
+  //get route for topic neighborhoods
+  app.post('/neighborhoodsTopic', isLoggedIn, (req, res) => {
+    console.log(req.body)
+    //the following code is clean up 
+    // saying: if req.body.zipcodes is undefined, we will return an empty array, and IF it is defined, we will check to see if req.body.zipcodes is an array. if it is an array, we say; fine, let's just pass it through, however, if it is not one (for the edge case of one zipcode selected) we will make it an array but putting it in brackets and returning that. 
+    let neighborhoodSearch = req.body.neighborhoodsTopic === undefined ? [] : Array.isArray(req.body.neighborhoodsTopic) ? req.body.neighborhoodsTopic : [req.body.neighborhoodsTopic]
+    db.collection('topic').find(
+      {
+        neighborhood: {
+          $in: neighborhoodSearch
+          //had to change this naming because it was interfering
+          //having one selection doesn't give us an array but having two gibes us an array, and the $in operator needs that 
+        }
+      }
+    ).toArray((err, result) => {
+      if (err) return console.log(err)
+      console.log(result)
+      res.render('topicFeed.ejs', {
+        user: req.user,
+        topic: result,
+        neighborhoods: neighborhoods,
+        zipcodes: zipcodes
+      })
+    })
+  })
 
   // get individual Housing Post=========================
   app.get('/housingPost', isLoggedIn, function (req, res) {
@@ -170,6 +244,8 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
       res.redirect(`/housingPost?id=${req.params.id}`)
     })
   })
+
+  //comments for topic post
    app.post('/makeCommentTopic/:id', (req, res) => {
     let user = req.user.userName
     db.collection('comments').save({ comment: req.body.comment, postedBy: user, postedById: req.user._id, postId: ObjectId(req.params.id) }, (err, result) => {
@@ -183,7 +259,8 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
   app.get('/submitTopic', isLoggedIn, function (req, res) {
     res.render('submitTopic.ejs',
       { user: req.user,
-        neighborhoods: neighborhoods })
+        neighborhoods: neighborhoods,
+        zipcodes: zipcodes})
   });
 
   // get topic page=========================

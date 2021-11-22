@@ -4,8 +4,9 @@
     <title>Housing Post Feed</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+    
 </head>
 <body>
 
@@ -20,46 +21,50 @@
     <a href="/save" >savedPage</a>
     <a href="/login" >Login</a>
   </nav>
+  <div class="container">
 
-<div class="container">
-
-    <div class="page-header text-center">
+    <div class="row page-header text-center">
         <h2><span class="fa fa-home"></span> Housing Post Feed</h2>
     </div>
 
-    <div>
-      <p>search by zipcode</p>
-      <form action="/zipcodes" method="post">
-        <label for="zipcodes">choose a zipCode</label>
-          <select name="zipcodes" id="zipcodes" size="4" multiple>
-            <option selected disabled>zipcode</option>
-            <!-- use this same block of code on the feeds and the sign in and topic page -->
-          <% for(let i = 0; i < zipcodes.length; i++) {%>
-            <option value="<%= zipcodes[i] %>"><%= zipcodes[i] %></option>
-          <% }%>  
-        </select>
-        <br><br>
-        <input type="submit" value="Submit">
-      </form>
-      
-      <p>search by neighborhood</p>
+    <div class="searchBox row">
+      <div class="col searchForms">
+        <form action="/zipcodesHousing" method="post">
+          <label for="zipcodesHousing">zipcode</label>
+            <select name="zipcodesHousing" id="zipcodesHousing" size="4" multiple>
+              <option selected disabled>zipcode</option>
+              <!-- use this same block of code on the feeds and the sign in and topic page -->
+            <% for(let i = 0; i < zipcodes.length; i++) {%>
+              <option value="<%= zipcodes[i] %>"><%= zipcodes[i] %></option>
+            <% }%>  
+          </select>
+          <br><br>
+          <input type="submit" value="Submit">
+        </form>
+      </div>
+      <div class="col searchForms">
+        <form action="/neighorhoodsHousing" method="post">
+          <label for="neighorhoodsHousing">neighborhood</label>
+            <select name="neighorhoodsHousing" id="neighborhoodsHousing" size="4" multiple>
+              <option selected disabled>neighborhood</option>
+              <!-- use this same block of code on the feeds and the sign in and topic page -->
+            <% for(let i = 0; i < neighborhoods.length; i++) {%>
+              <option value="<%= neighborhoods[i] %>"><%= neighborhoods[i] %></option>
+            <% }%>  
+          </select>
+          <br><br>
+          <input type="submit" value="Submit">
+        </form>
+      </div>
+
     </div>
-
-    <!-- <label for="cars">Choose a car:</label>
-
-<select name="cars" id="cars" multiple>
-  <option value="volvo">Volvo</option>
-  <option value="saab">Saab</option>
-  <option value="opel">Opel</option>
-  <option value="audi">Audi</option>
-</select> -->
 
     <div class="holdingSector">
       
         <div class="feed">
           
           <% for(var i=0; i<housingPosts.length; i++) {%>
-            <section class="individualPosting">
+            <section class="row cssForRow individualPosting">
               <a href="/otherUserProfile/<%= housingPosts[i].userId %>"><h4>name : <%= housingPosts[i].userName %></h4></a>
               <!-- <h4>name : <%# housingPosts[i].userName %></h4> -->
               
@@ -81,7 +86,7 @@
 
           <!-- so the profile section will have your saved housing posts, AND saved message board posts.  and other information to put in-->
 
-</div>
+  </div>
 
 <script src="main.js"></script>
 

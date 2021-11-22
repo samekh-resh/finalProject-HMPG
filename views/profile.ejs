@@ -51,15 +51,15 @@
                 <% console.log(chatSubmitted.userId) %>
                 <% if (chatSubmitted.userId.equals(user._id)  ) {%> 
 
-                <div class="row">
-                   <section class="col">
+                <div class="row cssForRow">
+                   <section class="col cssForCol">
                     <label>userName</label>
                      <p><%= chatSubmitted.userName %></p> </section>
-                   <section class="col">
+                   <section class="col cssForCol">
                     <label>housing status</label>
                      <p><%= chatSubmitted.housingStatus %></p> </section>
                   <% let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }; %>
-                   <section class="col">
+                   <section class="col cssForCol">
                     <label>datePostedBy</label>
                      <p><%= chatSubmitted.datePostedBy.toLocaleDateString("en-US", options) %></p> </section>
                   <!--  <section></p><span><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>
@@ -80,13 +80,13 @@
           <% if (user.local.email) { %>
 
 
-          <form class="row" action="/chatSubmitted" method="post">
+          <form class="row cssForRow" action="/chatSubmitted" method="post">
             <input type="hidden" value="<%= user._id %>" name="userId">
-            <div class=" col nameProfile form-group">
+            <div class=" col  cssForCol nameProfile form-group">
               <label>name</label>
               <input type="text" class="form-control" value="<%= user.userName %>" name="userName" />
             </div>
-            <div class=" col housingStatus form-group">
+            <div class=" col cssForCol housingStatus form-group">
               <label for="housingType">looking for housing?</label>
   
               <select name="housingStatus" id="housingStatus">
@@ -97,7 +97,7 @@
                 <option value="longterm">longterm</option>
               </select>
             </div>
-            <div class=" col datePosted form-group">
+            <div class=" col cssForCol datePosted form-group">
               <label>date Posted By</label>
               <input type="date" class="form-control" name="datePostedBy" />
             </div>

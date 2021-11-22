@@ -1,7 +1,10 @@
+*{
+  box-sizing: border-box;
+}
 body{
   word-wrap:break-word;
-  /* background: url(/img/pic3.jpg);
-  background-size: cover; */
+  background: url(/img/pic3.jpg);
+  background-size: cover;
 }
 
 a{
@@ -13,6 +16,38 @@ a:hover{
   text-decoration: none;
 
 }
+/* to establish the background of the heading */
+.page-header{
+  /* border: red 1px solid; */
+  border-radius: 10px;
+  background: rgb(85, 85, 242);
+  justify-content: center;
+  width: 50%;
+  margin: auto;
+  margin-bottom: 3%;
+}
+/* to center searchbox, separate it from the feed,  */
+.searchBox{
+  /* border: red 1px solid; */
+  border-radius: 10px;
+  background: rgb(85, 85, 242);
+  padding-left: 4%;
+  padding-right: 4%;
+  padding-bottom: 2%;
+  padding-top: 2%;
+  width: 550px;
+  margin: auto;
+  margin-bottom: 2%;
+}
+
+select, input{
+  border-radius: 10px;
+}
+
+/* input, label{
+  margin: auto;
+} */
+
 
 
 nav{
@@ -21,23 +56,23 @@ nav{
   height: 50px;
   padding: 0.5%;
   color: rgb(237, 133, 133);
-  margin-bottom: 5%;
+  margin-bottom: 1%;
   text-align: center;
 }
 nav h1{
   display: inline;
   font-size: 24px;
   float: left;
+  position: relative;
+  bottom: 15px;
 }
 
 nav a{
-  padding: 0.5%;
+  padding-right: 2%;
+  padding-left: 2%;
+  position: relative;
+  top: 5px;
 }
-
-
-/* nav a{
-
-} */
 
 /* nav button{
   background:;
@@ -73,19 +108,14 @@ ul{
   align-items: center;
 }
 
-.row{
+.cssForRow{
   width: 600px;
   color: rgb(230, 178, 178);
-  
   margin-bottom: 5%;
   text-align: center;
 }
 
-.newBtn{
-  border: black solid 22px;
-}
-
-.col{
+.cssForCol{
   border:2px solid black;
   padding:3%;
   margin: 5%;
@@ -94,21 +124,14 @@ ul{
   box-shadow: -32px 42px 37px 5px rgba(0,0,0,0.22);
 }
 
-.infoSec{
-  background: rgba(255, 255, 255, 0.774);
-  padding: 3%;
-  color: black;
-  width: 50%;
-  margin:auto;
+
+/* profile */
+
+.nameProfile{
+  width:20%;
 }
 
-.commentSec{
-  background: rgba(255, 255, 255, 0.774);
-  padding: 3%;
-  color: black;
-  width: 50%;
-  margin:auto;
-}
+
 .profileBlock{
   background: rgb(255, 255, 255);
   border-radius: 15px;
@@ -142,51 +165,84 @@ ul{
   padding: 2%;
 }
 
+/* individual posting */
+
 .title{
-  background: rgb(255, 255, 255);
+  background: rgb(218, 149, 149);
   padding: 3%;
   color: black;
   margin: auto;
-  margin-bottom: 5%;
+  margin-bottom: 2%;
+  margin-top: 2%;
   width: 50%;
+  border-radius: 15px;
+}
+.infoSec{
+  /* background: rgba(255, 255, 255, 0.186); */
+  color: black;
+  width: 50%;
+  margin:auto;
+  margin-bottom: 2%;
+}
+
+.commentSec, .commentSubm{
+  background: rgb(255, 255, 255);
+  border:rgb(85, 85, 242) 1px solid;
+  border-radius: 10px;
+  padding: 3%;
+  color: black;
+  width: 50%;
+  margin:auto;
+  margin-bottom: 2%;
+}
+
+.whoPosted, .location, .imageBlock, .infoBlock{
+  border:rgb(85, 85, 242) 1px solid;
+  background: rgb(255, 255, 255);
+  margin:auto;
+  margin-bottom: 2%;
+  border-radius: 10px;
+  padding: 3%;
+}
+
+/* for the feeds */
+.searchForms{
+  display: inline-block;
+  margin: 0px 8% 0px 8%;
+}
+
+form{
+  background: rgb(92, 92, 255);
+  text-align: center;
+  padding: 7px;
+  border-radius: 10px;
+  box-shadow: -32px 42px 37px 5px rgba(0,0,0,0.22);
+}
+.searchForms #neighborhoodsHousing, .searchForms #neighborhoodsTopic, .searchForms #zipcodesHousing, .searchForms #zipcodesTopic {
+  display: block;
+  width: 100%;
+  /* margin:auto;  */
 }
 .feed{
-  overflow: auto;
+  overflow: scroll;
+  border-radius: 10px;
+  height:500px;
+  width: 450px;
   background: rgb(216, 157, 94);
   color:rgba(0, 0, 0, 0.582);
+  margin: auto;
   margin-bottom: 2%;
+}
+
+.individualPosting{
+  width: 400px;
+  border:2px solid black;
+  padding:3%;
+  margin: 5%;
+  background: rgb(255, 255, 255);
+  border-radius: 10px;
+  box-shadow: -32px 42px 37px 5px rgba(0,0,0,0.22);
 }
 /* spacing */
 
-.nameProfile{
-  width:20%;
-}
-
-table {
-  table-layout: fixed;
-  width: 100%;
-  border-collapse: collapse;
-  padding: 2%;
-  
-}
-
-thead th:nth-child(1) {
-  width: 30%;
-}
-
-thead th:nth-child(2) {
-  width: 20%;
-}
-
-thead th:nth-child(3) {
-  width: 15%;
-}
-
-thead th:nth-child(4) {
-  width: 35%;
-}
-
-th, td {
-  padding: 1px;;
-}
 /* give the spans a display block so that they can all be on their own lines.  */

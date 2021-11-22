@@ -26,15 +26,15 @@
     </nav>
     <div class="container">
       <div class="col-sm-6 col-sm-offset-3">
-        <h1><span class="fa fa-sign-in"></span> Signup</h1>
+       
 
         <% if (message.length > 0) { %>
         <div class="alert alert-danger"><%= message %></div>
         <% } %>
         
-        <div class="well">
           <!-- LOGIN FORM -->
           <form action="/signup" method="post">
+            <h2><span class="fa fa-sign-in"></span> Signup</h2>
             <div class="form-group">
               <label>UserName</label>
               <input type="text" class="form-control" name="userName" />
@@ -96,20 +96,17 @@
                 <!-- use this same block of code on the feeds and the sign in and topic page -->
               <% for(let i = 0; i < zipcodes.length; i++) {%>
                 <option value="<%= zipcodes[i] %>"><%= zipcodes[i] %></option>
-              <% }%>  
+              <% }%>
+              </select> 
             </div>
             
             
 
             <button class="newBtn" type="submit" class="btn btn-warning btn-lg">Signup</button>
+
+            <p>Already have an account? <a href="/login">Login</a></p>
           </form>
 
-          <hr />
-
-          
-        </div>
-        <p>Already have an account? <a href="/login">Login</a></p>
-          <p>Or go <a href="/">home</a>.</p>
       </div>
     </div>
   </body>

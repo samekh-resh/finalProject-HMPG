@@ -36,23 +36,23 @@
                 
                 
                 <% if (chat && chat.userId) {%>
-                <div class="row">
-                  <section class="col">
+                <div class="row cssForRow">
+                  <section class="col cssForCol">
                     <label for=""> </label>
                     <p><%= chat.userName %> </p>
                   </section>
-                  <section class="col">
+                  <section class="col cssForCol">
                     <label for=""> </label>
                     <p><%= chat.housingStatus %> </p>
                   </section>
-                  <section class="col">
+                  <section class="col cssForCol">
                     <% let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }; %>
                     <label for=""> </label>
                     <p> <%= chat.datePostedBy.toLocaleDateString("en-US", options) %> 
                     </p>
                   </section>
                 <% } else { %>
-                  <p class="col"> user has not placed a status, yet.</p>
+                  <p class="col cssForCol"> user has not placed a status, yet.</p>
                   <% } %>
                 </div>
                     
