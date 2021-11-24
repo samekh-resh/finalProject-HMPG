@@ -271,9 +271,9 @@ form{
   /* the above css is to put them side by side, because the css I currently had for it was abysmal.  */
 }
 
-.feedForms{
+/* .feedForms{
   display:table-caption;
-}
+} */
 
 /* how is the above css targetting the feed forms without having a class given to them */
 .searchForms #neighborhoodsHousing, .searchForms #neighborhoodsTopic, .searchForms #zipcodesHousing, .searchForms #zipcodesTopic {
