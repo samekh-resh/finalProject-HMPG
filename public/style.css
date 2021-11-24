@@ -266,9 +266,16 @@ form{
   padding: 7px;
   border-radius: 10px;
   box-shadow: -32px 42px 37px 5px rgba(0,0,0,0.22);
-  display:table-caption;
+  /* display:table-caption; */
+  /* width: 100%; */
   /* the above css is to put them side by side, because the css I currently had for it was abysmal.  */
 }
+
+.feedForms{
+  display:table-caption;
+}
+
+/* how is the above css targetting the feed forms without having a class given to them */
 .searchForms #neighborhoodsHousing, .searchForms #neighborhoodsTopic, .searchForms #zipcodesHousing, .searchForms #zipcodesTopic {
   display: block;
   width: 100%;
@@ -297,7 +304,7 @@ form{
 /* spacing */
 
 /* give the spans a display block so that they can all be on their own lines.  */
-
+/* 
 @media screen 
   and (max-device-width: px){ 
-}
+} */
