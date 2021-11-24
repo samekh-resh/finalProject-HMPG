@@ -174,7 +174,7 @@ ul{
   background: rgb(167, 78, 48);
   border-radius: 15px;
   padding: 3%;
-  color: black;
+  color: white;
   margin:auto;
   margin-bottom: 3%;
   width: 200px;
@@ -208,7 +208,7 @@ ul{
 .title{
   background: rgb(236, 146, 116);
   padding: 3%;
-  color: black;
+  color: white;
   margin: auto;
   margin-bottom: 2%;
   margin-top: 2%;
@@ -266,6 +266,8 @@ form{
   padding: 7px;
   border-radius: 10px;
   box-shadow: -32px 42px 37px 5px rgba(0,0,0,0.22);
+  display:table-caption;
+  /* the above css is to put them side by side, because the css I currently had for it was abysmal.  */
 }
 .searchForms #neighborhoodsHousing, .searchForms #neighborhoodsTopic, .searchForms #zipcodesHousing, .searchForms #zipcodesTopic {
   display: block;
