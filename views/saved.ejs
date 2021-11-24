@@ -29,7 +29,7 @@
 
     <div class="holdingSector">
       
-        <div class="feed">
+        <div class="col feed">
           <h2>saved Housing</h2>
           <% for(var i=0; i<housingPosts.length; i++) {%>
             <section class="individualPosting">
@@ -40,15 +40,15 @@
               <% let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }; %>
                 <p><%= housingPosts[i].datePostedBy.toLocaleDateString("en-US", options)  %></p>
               <span><i data-id="<%= housingPosts[i]._id %>" class="fa save-housing fa-save" aria-hidden="true"></i></span>
-              <% if ( housingPosts[i].userId.equals(user._id)) { %>
-                <span><i data-id="<%= housingPosts[i]._id %>" class="fa housing-trash fa-trash" aria-hidden="true"></i></span>
-              <% } %>
+                <span><i data-id="<%= housingPosts[i]._id %>" class="fa remove-saved-housing fa-trash" aria-hidden="true"></i></span>
+
             </section>
 
          <% } %>
+        </div>
 
 
-        <div class="feed">
+        <div class="col feed">
           <h2>saved Topics</h2>
           <% for(var i=0; i<topic.length; i++) {%>
             <section class="individualPosting">
@@ -59,19 +59,20 @@
               <% let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }; %>
                 <p><%= topic[i].datePostedBy.toLocaleDateString("en-US", options)  %></p>
               <span><i data-id="<%= topic[i]._id %>" class="fa save-housing fa-save" aria-hidden="true"></i></span>
-              <% if ( topic[i].userId.equals(user._id)) { %>
-                <span><i data-id="<%= topic[i]._id %>" class="fa housing-trash fa-trash" aria-hidden="true"></i></span>
-              <% } %>
+              <span><i data-id="<%= topic[i]._id %>" class="fa remove-saved-topic fa-trash" aria-hidden="true"></i></span>
+              
             </section>
 
          <% } %>
         </div>
          
-    </div>
+    
 
           <!-- so the profile section will have your saved housing posts, AND saved message board posts.  and other information to put in-->
 
+  </div>
 </div>
+
 
 <script src="main.js"></script>
 

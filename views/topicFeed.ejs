@@ -65,12 +65,15 @@
 
           <% for(var i=0; i<topic.length; i++) {%>
             <section class='row cssForRow individualPosting'>
-              <a href="/otherUserProfile/<%= topic[i].userId %>"><h4><%= topic[i].userName %></h4></a>
+
               <a href="/topicPost?id=<%= topic[i]._id%>">
-                <span><%= topic[i].title %></span>
+                <h4> <%=topic[i].title %></h4>
                 </a>
+              <a href="/otherUserProfile/<%= topic[i].userId %>"><span> <%= topic[i].userName%></span></a>
                 <% let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }; %>
                 <p><%= topic[i].datePostedBy.toLocaleDateString("en-US", options)  %></p>
+                <p><%= topic[i].zipcode  %></p>
+                <p><%= topic[i].neighborhood  %></p>
               <span><i data-id="<%= topic[i]._id %>" class="fa save-topic fa-save" aria-hidden="true"></i></span>
 
               <% if ( topic[i].userId.equals(user._id)) { %>

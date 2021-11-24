@@ -1,5 +1,8 @@
 module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes) {
 
+  const fs = require('fs');
+  const path = require('path');
+
   const multer = require('multer')
   // Image Upload Code =========================================================================
   const storage = multer.diskStorage({
@@ -54,19 +57,19 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
   // PROFILE SECTION =========================
   app.get('/profile', isLoggedIn, function (req, res) {
     //at some point, we need to be finding from the database that shows the saved posts and topcis of each user, but for now it will jsut find the postings. 
-    console.log('hopefully' , req.user)
-    db.collection('chatSubmitted').findOne( {userId: ObjectId(req.user._id)},(err, result) => {
+    console.log('hopefully', req.user)
+    db.collection('chatSubmitted').findOne({ userId: ObjectId(req.user._id) }, (err, result) => {
       // console.log(result._)
       if (err) return console.log(err)
-      
+
       res.render('profile.ejs', {
         user: req.user,
-        chatSubmitted: result ? result : {userId: 0}
+        chatSubmitted: result ? result : { userId: 0 }
       })
       //  console.log(req.user._id)
       // console.log(chatSubmitted)
     })
-   
+
   });
 
   app.get('/otherUserProfile/:id', isLoggedIn, async function (req, res) {
@@ -74,11 +77,11 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
     let id = new ObjectId(req.params.id)
     //retrieving housing posts
     const userRes = await
-    db.collection('users').findOne({ _id: id })
+      db.collection('users').findOne({ _id: id })
 
     //retrieving topics
     const chatRes = await
-    db.collection('chatSubmitted').findOne({ userId: id})
+      db.collection('chatSubmitted').findOne({ userId: id })
     console.log(userRes, chatRes)
     res.render('otherUserProfile.ejs', {
       user: userRes,
@@ -235,8 +238,8 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
     })
   });
 
-   // comments for housing posts routes
-   app.post('/makeComment/:id', (req, res) => {
+  // comments for housing posts routes
+  app.post('/makeComment/:id', (req, res) => {
     let user = req.user.userName
     db.collection('comments').save({ comment: req.body.comment, postedBy: user, postedById: req.user._id, postId: ObjectId(req.params.id) }, (err, result) => {
       if (err) return console.log(err)
@@ -246,7 +249,7 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
   })
 
   //comments for topic post
-   app.post('/makeCommentTopic/:id', (req, res) => {
+  app.post('/makeCommentTopic/:id', (req, res) => {
     let user = req.user.userName
     db.collection('comments').save({ comment: req.body.comment, postedBy: user, postedById: req.user._id, postId: ObjectId(req.params.id) }, (err, result) => {
       if (err) return console.log(err)
@@ -258,9 +261,11 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
   // Submit Topic=========================
   app.get('/submitTopic', isLoggedIn, function (req, res) {
     res.render('submitTopic.ejs',
-      { user: req.user,
+      {
+        user: req.user,
         neighborhoods: neighborhoods,
-        zipcodes: zipcodes})
+        zipcodes: zipcodes
+      })
   });
 
   // get topic page=========================
@@ -293,7 +298,7 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
       })
     })
   });
-  
+
   // LOGOUT ==============================
   app.get('/logout', function (req, res) {
     req.logout();
@@ -323,7 +328,9 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
   // post route for housing post
 
   app.post('/submitHousingPost', isLoggedIn, upload.single('file-to-upload'), (req, res) => {
-    console.log(req.user)
+    console.log(req.file)
+    const picData = fs.readFileSync(path.join(__dirname + '/../public/images/uploads/' + req.file.filename))
+    console.log(path.join(__dirname + '/../public/images/uploads/' + req.file.filename))
     db.collection('housingPost').save({
       userName: req.user.userName,
       userId: req.user._id,
@@ -333,8 +340,8 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
       title: req.body.title,
       housingType: req.body.housingType,
       aboutPosting: req.body.aboutPosting,
-      img: req.file ? 'images/uploads/' + req.file.filename : null,
-      datePostedBy: new Date(req.body.datePostedBy) 
+      img: req.file ? picData : null,
+      datePostedBy: new Date(req.body.datePostedBy)
     }, (err, result) => {
       if (err) return console.log(err)
       console.log('saved to database')
@@ -393,6 +400,73 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
       })
   })
 
+  app.put('/unsaveHousing', isLoggedIn, (req, res) => {
+
+    db.collection('housingPost')
+      .findOneAndUpdate({ _id: ObjectId(req.body.postId) }, {
+        $pull: {
+          interestedUsers: ObjectId(req.user.id)
+        }
+      }, {
+        sort: { _id: -1 },
+        upsert: false
+      }, (err, result) => {
+        if (err) return res.send(err)
+        res.send(result)
+      })
+  })
+  
+  app.put('/unsaveTopic', isLoggedIn, (req, res) => {
+
+    db.collection('topic')
+      .findOneAndUpdate({ _id: ObjectId(req.body.topicId) }, {
+        $pull: {
+          interestedUsers: ObjectId(req.user.id)
+        }
+      }, {
+        sort: { _id: -1 },
+        upsert: false
+      }, (err, result) => {
+        if (err) return res.send(err)
+        res.send(result)
+      })
+  })
+
+
+
+  // //unsave from a post
+  // app.put('/unSavePost', isLoggedIn,  function (req, res) {
+    
+  //   //retrieving housing posts
+  //     db.collection('housingPost')
+  //       .findOneAndUpdate({ _id: ObjectId(req.body._id) }, {
+  //         $pull: {
+  //           interestedUsers: ObjectId(req.user._id)
+  //         }
+  //       }, {
+  //         sort: { _id: -1 },
+  //         upsert: false
+  //       })
+
+  //   //retrieving topics
+  //     db.collection('topic')
+  //       .findOneAndUpdate({ _id: ObjectId(req.body._id) }, {
+  //         $pull: {
+  //           interestedUsers: ObjectId(req.user._id)
+  //         }
+  //       }, {
+  //         sort: { _id: -1 },
+  //         upsert: false
+  //       })
+
+
+  //   res.render('saved.ejs', {
+  //     user: req.user,
+  //     housingPosts: result,
+  //     topic: result
+  //   })
+  // });
+
 
 
   // app.put('/messages', (req, res) => {
@@ -446,10 +520,12 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
   // SIGNUP =================================
   // show the signup form
   app.get('/signup', function (req, res) {
-    res.render('signup.ejs', 
-    { message: req.flash('signupMessage'),
-      neighborhoods: neighborhoods, 
-      zipcodes: zipcodes });
+    res.render('signup.ejs',
+      {
+        message: req.flash('signupMessage'),
+        neighborhoods: neighborhoods,
+        zipcodes: zipcodes
+      });
   });
 
   // process the signup form

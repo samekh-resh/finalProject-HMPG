@@ -33,20 +33,38 @@
 
         <div class='infoSec'>
 
-            <div class="whoPosted">     
-                <h4> <%= topic.userName %></h4>
+            <div class="whoPosted">  
+                <label> Posted by</label>  
+                <section class="renderedInfo">
+                    
+                    <a href="/otherUserProfile/<%= topic.userId %>"><h4> <%= topic.userName%></h4></a> 
+                </section>
+                
             </div>
-
             <div class="location">
-                <h4> <%= topic.zipcode %></h4>
-                <h5> <%= topic.neighborhood %></h5>
-
+                <label> city </label>
+                <section class="renderedInfo">
+                  <h4><%= topic.city %></h4>
+                </section>
             </div>
-
-            
+              <div class="location">
+                <label> zipcode </label>
+                <section class="renderedInfo">
+                  <h5> <%= topic.zipcode %></h5>
+                </section>
+            </div>
+              <div class="location">
+                <label> neighborhood </label>
+                <section class="renderedInfo">
+                  <h5> <%= topic.neighborhood %></h5>
+                </section>
+            </div>
             <div class="infoBlock">
-                <h5> <%= topic.aboutPosting %></h5>
-              </div>
+                <label>a little about the posting:</label>
+                <section class="renderedInfo">
+                    <h5><%= topic.aboutPosting %></h5>
+                </section>
+            </div>
            
             <!-- <h5> <%# topic.thumbUp %></h5> -->
     
@@ -56,12 +74,15 @@
         </div>
 
         <div class="commentSec">
-            <% for (let i = 0; i < comments.length; i++) {%>
-                <div class="individualComment">
-                    <h4><%= comments[i].comment %></h4>
-                    <p><a href="/otherUserProfile/<%= comments[i].postedById %>"> <%= comments[i].postedBy %> </a></p>
-                </div>
-            <% } %>
+            <label> comment </label>
+            <section class="renderedInfo">
+              <% for (let i = 0; i < comments.length; i++) {%>
+              <div class="individualComment">
+                <h4><%= comments[i].comment %></h4>
+                <p><a href="/otherUserProfile/<%= comments[i].postedById %>"> <%= comments[i].postedBy %> </a></p>
+              </div>
+              <% } %>
+            </section>
         </div>
     
 

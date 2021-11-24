@@ -28,13 +28,18 @@
       <div class="col-sm-6 col-sm-offset-3">
        
 
+        <div class="profileBlock">
+          <h2><span class="fa fa-sign-in"></span> Signup</h2>
+          <p>Already have an account? <a href="/login">Login</a></p>
+        </div>
+
         <% if (message.length > 0) { %>
         <div class="alert alert-danger"><%= message %></div>
         <% } %>
         
           <!-- LOGIN FORM -->
           <form action="/signup" method="post">
-            <h2><span class="fa fa-sign-in"></span> Signup</h2>
+            
             <div class="form-group">
               <label>UserName</label>
               <input type="text" class="form-control" name="userName" />
@@ -104,7 +109,7 @@
 
             <button class="newBtn" type="submit" class="btn btn-warning btn-lg">Signup</button>
 
-            <p>Already have an account? <a href="/login">Login</a></p>
+            
           </form>
 
       </div>

@@ -65,11 +65,15 @@
           
           <% for(var i=0; i<housingPosts.length; i++) {%>
             <section class="row cssForRow individualPosting">
-              <a href="/otherUserProfile/<%= housingPosts[i].userId %>"><h4>name : <%= housingPosts[i].userName %></h4></a>
+              
               <!-- <h4>name : <%# housingPosts[i].userName %></h4> -->
               
-              <a href="/housingPost?id=<%=housingPosts[i]._id%>"><span><%= housingPosts[i].title %></span></a>
+              <a href="/housingPost?id=<%=housingPosts[i]._id%>"><h4><%= housingPosts[i].title %></h4></a>
+
+              <a href="/otherUserProfile/<%= housingPosts[i].userId %>"><span><%= housingPosts[i].userName %></span></a>
+
               <p><%= housingPosts[i].neighborhood %></p>
+              <p><%= housingPosts[i].zipcode %></p>
               
               <% let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }; %>
               <p><%= housingPosts[i].datePostedBy.toLocaleDateString("en-US", options)  %></p>  

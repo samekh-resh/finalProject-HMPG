@@ -3,6 +3,8 @@ var saveHousing = document.getElementsByClassName("save-housing");
 var saveTopic = document.getElementsByClassName("save-topic");
 var topicTrash = document.getElementsByClassName("topic-trash");
 var housingTrash = document.getElementsByClassName("housing-trash");
+var unsaveHousing = document.getElementsByClassName("remove-saved-housing");
+var unsaveTopic = document.getElementsByClassName("remove-saved-topic");
 
 // Array.from(thumbUp).forEach(function(element) {
 //       element.addEventListener('click', function(){
@@ -100,6 +102,40 @@ Array.from(housingTrash).forEach(function(element) {
           },
           body: JSON.stringify({
             id: element.dataset.id
+          })
+        }).then(function (response) {
+          window.location.reload()
+        })
+      });
+});
+//unsave a housing post
+Array.from(unsaveHousing).forEach(function(element) {
+      element.addEventListener('click', function(){
+      console.log(element.dataset.id)
+        fetch('unsaveHousing', {
+          method: 'put',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            postId: element.dataset.id
+          })
+        }).then(function (response) {
+          window.location.reload()
+        })
+      });
+});
+//unsave a topic post
+Array.from(unsaveTopic).forEach(function(element) {
+      element.addEventListener('click', function(){
+      console.log(element.dataset.id)
+        fetch('unsaveTopic', {
+          method: 'put',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            topicId: element.dataset.id
           })
         }).then(function (response) {
           window.location.reload()
