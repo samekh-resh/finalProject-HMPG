@@ -142,3 +142,7 @@ Array.from(unsaveTopic).forEach(function(element) {
         })
       });
 });
+
+let gpaInput = document.getElementById("enterLocation")
+let autocomplete = new google.maps.places.Autocomplete(gpaInput)
+

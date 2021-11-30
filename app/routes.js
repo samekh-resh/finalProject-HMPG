@@ -20,7 +20,7 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
   app.get('/', function (req, res) {
     res.render('index.ejs');
   });
-  // for save page
+
   // app.get('/save', isLoggedIn, function (req, res) {
   //   db.collection('housingPost').find({
   //     interestedUsers: ObjectId(req.user.id)
@@ -33,6 +33,30 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
   //   });
   // })
 
+  // //route for map
+  // app.get('/map', function (req, res) {
+  //   res.render('map.ejs');
+  // });
+
+  //
+
+  app.get('/map', isLoggedIn, function (req, res) {
+    //limit it to your zipcode asp
+    console.log(req.user.zipcode)
+    db.collection('housingPost').find().toArray((err, result) => {
+      if (err) return console.log(err)
+      console.log(result)
+      res.render('map.ejs', {
+        user: req.user,
+        housingPosts: result
+      })
+    })
+  });
+
+
+  //get locations so that they can render on the map
+  
+  // for save page
   app.get('/save', isLoggedIn, async function (req, res) {
 
     //retrieving housing posts
@@ -53,6 +77,35 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
       topic: topicRes
     })
   });
+
+  app.get('/locations', isLoggedIn, async function (req, res) {
+
+    //retrieving housing posts
+    const housingRes = await
+      db.collection('housingPost').find().toArray();
+
+    //retrieving topics
+    const topicRes = await
+      db.collection('topic').find().toArray();
+
+    
+    res.send({
+      user: req.user,
+      housingPosts: housingRes,
+      topic: topicRes
+    })
+  });
+  // app.get('/locations', function (req, res) {
+  //   db.collection('housingPost').find().toArray((err, result) => {
+  //     console.log(result)
+  //     if (err) return console.log(err)
+  //     res.send({
+  //       user: req.user,
+  //       housingPosts: result
+  //     })
+  //   })
+  // });
+
 
   // PROFILE SECTION =========================
   app.get('/profile', isLoggedIn, function (req, res) {
@@ -333,6 +386,7 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
     console.log(path.join(__dirname + '/../public/images/uploads/' + req.file.filename))
     db.collection('housingPost').save({
       userName: req.user.userName,
+      fullAddress: req.body.fullAddress,
       userId: req.user._id,
       zipcode: req.body.zipcode,
       city: req.body.city,
@@ -341,6 +395,7 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
       housingType: req.body.housingType,
       aboutPosting: req.body.aboutPosting,
       img: req.file ? picData : null,
+      //something going on with not being able to send no image
       datePostedBy: new Date(req.body.datePostedBy)
     }, (err, result) => {
       if (err) return console.log(err)
@@ -415,7 +470,7 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
         res.send(result)
       })
   })
-  
+
   app.put('/unsaveTopic', isLoggedIn, (req, res) => {
 
     db.collection('topic')
@@ -436,7 +491,7 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
 
   // //unsave from a post
   // app.put('/unSavePost', isLoggedIn,  function (req, res) {
-    
+
   //   //retrieving housing posts
   //     db.collection('housingPost')
   //       .findOneAndUpdate({ _id: ObjectId(req.body._id) }, {

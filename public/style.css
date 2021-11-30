@@ -7,7 +7,6 @@ body{
   word-wrap:break-word;
   background: url(/img/pic3.jpg);
   background-size: cover;
-  /* background: rgb(233, 136, 75); */
   font-family: 'EB Garamond', serif !important;
   font-size: 2vh;
 }
@@ -22,9 +21,9 @@ a:hover{
   text-decoration: none;
 
 }
-/* to establish the background of the heading */
+
 .page-header{
-  /* border: red 1px solid; */
+
   border-radius: 10px;
   background: rgb(167, 78, 48);
   justify-content: center;
@@ -32,9 +31,9 @@ a:hover{
   margin: auto;
   margin-bottom: 3%;
 }
-/* to center searchbox, separate it from the feed,  */
+
 .searchBox{
-  /* border: red 1px solid; */
+
   border-radius: 10px;
   background: rgb(255, 155, 84);
   padding-left: 4%;
@@ -49,19 +48,7 @@ a:hover{
 select, input{
   border-radius: 10px;
 }
-/* color swatch */
-/* 
-input, label{
-  margin: auto;
 
-  color: rgb(233, 136, 75);
-  color: rgb(167, 78, 48);
-  color: rgb(79, 0, 11);
-  color: rgb(255, 155, 84);
-  color: rgb(114, 0, 38);
-  color: rgb(206, 66, 87);
-  color: rgb(255, 127, 81);
-} */
 
 nav{
   background: rgb(252, 248, 248);
@@ -87,10 +74,6 @@ nav a{
   top: 5px;
 }
 
-/* nav button{
-  background:;
-} */
-/* index page */
 .index{
   padding: 10px;
   border-radius: 15px;
@@ -131,10 +114,6 @@ ul{
   background: rgba(208, 178, 121, 0.885);
   border-radius: 2px;
   width: 600px;
-  /* width: 600px;
-  color: rgb(230, 178, 178);
-  margin-bottom: 5%;
-  text-align: center; */
 }
 
 .standard{
@@ -163,8 +142,6 @@ ul{
 }
 
 
-/* profile */
-
 .nameProfile{
   width:20%;
 }
@@ -188,8 +165,6 @@ ul{
   padding: 3%;
   width: 75%;
   margin:auto;
-  /* margin-bottom: 2%;
-  padding: 2%; */
 }
 
 .submitStatus{
@@ -203,8 +178,6 @@ ul{
   padding: 2%;
 }
 
-/* individual posting */
-
 .title{
   background: rgb(236, 146, 116);
   padding: 3%;
@@ -216,7 +189,6 @@ ul{
   border-radius: 15px;
 }
 .infoSec{
-  /* background: rgba(255, 255, 255, 0.186); */
   color: black;
   width: 50%;
   margin:auto;
@@ -254,7 +226,6 @@ label{
   padding: 3%;
 }
 
-/* for the feeds */
 .searchForms{
   display: inline-block;
   margin: 0px 8% 0px 8%;
@@ -266,20 +237,13 @@ form{
   padding: 7px;
   border-radius: 10px;
   box-shadow: -32px 42px 37px 5px rgba(0,0,0,0.22);
-  /* display:table-caption; */
-  /* width: 100%; */
-  /* the above css is to put them side by side, because the css I currently had for it was abysmal.  */
 }
 
-/* .feedForms{
-  display:table-caption;
-} */
 
-/* how is the above css targetting the feed forms without having a class given to them */
 .searchForms #neighborhoodsHousing, .searchForms #neighborhoodsTopic, .searchForms #zipcodesHousing, .searchForms #zipcodesTopic {
   display: block;
   width: 100%;
-  /* margin:auto;  */
+
 }
 .feed{
   overflow: scroll;
@@ -301,10 +265,7 @@ form{
   border-radius: 10px;
   box-shadow: 19px 22px 14px 14px rgba(0,0,0,0.69);
 }
-/* spacing */
 
-/* give the spans a display block so that they can all be on their own lines.  */
-/* 
-@media screen 
-  and (max-device-width: px){ 
+/* .feedForms{
+  display:table-caption;
 } */

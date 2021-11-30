@@ -1,103 +1,126 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Topic Feed</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link href="styles.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     
 </head>
 <body>
 
-  <nav>
-    <h1>HOMEPAGE</h1>
-    <a href="/submitHousingPost">submit housing</a> 
-    <a href="/submitTopic">submit topic</a> 
-    <a href="/profile">profile</a> 
-    <a href="/housingPostFeed">housingFeed</a> 
-    <a href="/topicFeed">topicFeed</a> 
-    <a href="/logout" >Logout</a>
-    <a href="/save" >savedPage</a>
-    <a href="/login" >Login</a>
-  </nav>
-<div class="container">
-
-    <div class="row page-header text-center">
-        <h2><span class="fa fa-info-circle"></span> topicFeed</h2>
-    </div>
-
-    <div class="searchBox row">
-      <div class="col searchForms">
-        <form action="/zipcodesTopic" method="post">
-          <label for="zipcodesTopic">zipCode</label>
-            <select name="zipcodesTopic" id="zipcodesTopic" size="4" multiple>
-              <option selected disabled>zipcode</option>
-              <!-- use this same block of code on the feeds and the sign in and topic page -->
-            <% for(let i = 0; i < zipcodes.length; i++) {%>
-              <option value="<%= zipcodes[i] %>"><%= zipcodes[i] %></option>
-            <% }%>  
-          </select>
-          <br><br>
-          <input type="submit" value="Submit">
-        </form>
-      </div>
-      
-      <div class="col searchForms">
-        <form action="/neighborhoodsTopic" method="post">
-          <label for="neighborhoodsTopic">neighborhood</label>
-            <select name="neighborhoodsTopic" id="neighborhoodsTopic" size="4" multiple>
-              <option selected disabled>neighborhood</option>
-              <!-- use this same block of code on the feeds and the sign in and topic page -->
-            <% for(let i = 0; i < neighborhoods.length; i++) {%>
-              <option value="<%= neighborhoods[i] %>"><%= neighborhoods[i] %></option>
-            <% }%>  
-          </select>
-          <br><br>
-          <input type="submit" value="Submit">
-        </form>
-      </div>
-    </div>
-
-    <div class="holdingSector">
-
-        <div class="feed">
-
-          <% for(var i=0; i<topic.length; i++) {%>
-            <section class='row cssForRow individualPosting'>
-
-              <a href="/topicPost?id=<%= topic[i]._id%>">
-                <h4> <%=topic[i].title %></h4>
-                </a>
-              <a href="/otherUserProfile/<%= topic[i].userId %>"><span> <%= topic[i].userName%></span></a>
-                <% let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }; %>
-                <p><%= topic[i].datePostedBy.toLocaleDateString("en-US", options)  %></p>
-                <p><%= topic[i].zipcode  %></p>
-                <p><%= topic[i].neighborhood  %></p>
-              <span><i data-id="<%= topic[i]._id %>" class="fa save-topic fa-save" aria-hidden="true"></i></span>
-
-              <% if ( topic[i].userId.equals(user._id)) { %>
-              <span><i data-id="<%= topic[i]._id %>" class="fa topic-trash fa-trash" aria-hidden="true"></i></span>
-              <% } %>
-            </section>
-            
-
-          <% } %>
-
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container px-lg-5">
+        <a class="navbar-brand" href="/">homepage</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="/submitHousingPost">Submit Housing</a> </li>
+                <li class="nav-item"><a class="nav-link" href="/submitTopic">Submit Topic</a></li>
+                <li class="nav-item"><a class="nav-link" href="/housingPostFeed">Housing</a></li>
+                <li class="nav-item"><a class="nav-link" href="/topicFeed">Topic</a></li>
+                <li class="nav-item"><a class="nav-link" href="/save" >Saved</a></li>
+                <li class="nav-item"><a class="nav-link" href="/map" >Map</a></li>
+                <li class="nav-item"><a class="nav-link" href="/logout" >Logout</a></li>
+                <li class="nav-item"><a class="nav-link" href="/login" >Login</a></li>
+            </ul>
+            </ul>
         </div>
+    </div>
+</nav>
+
+
+
+
+
+    <header class="py-5">
+      <div class="container px-lg-5">
+          <div class="p-4 p-lg-5 bg-light rounded-3 text-center">
+              <div class="m-4 m-lg-5">
+                  <h1 class="display-1 fw-bold">Topic Feed</h1>
+                  <p class="fs-4">what are people talking about in your neighborhood</p>
+              </div>
+              <div class="row">
+            <div class="col">
+              <form action="/zipcodesTopic" method="post">
+                <label for="zipcodesTopic">zipCode</label>
+                  <select name="zipcodesTopic" id="zipcodesTopic" size="4" multiple>
+                    <option selected disabled>zipcode</option>
+                    <!-- use this same block of code on the feeds and the sign in and topic page -->
+                  <% for(let i = 0; i < zipcodes.length; i++) {%>
+                    <option value="<%= zipcodes[i] %>"><%= zipcodes[i] %></option>
+                  <% }%>  
+                </select>
+                <br><br>
+                <input type="submit" value="Submit">
+              </form>
+            </div>
+            <div class="col">
+              <form action="/neighborhoodsTopic" method="post">
+                <label for="neighborhoodsTopic">neighborhood</label>
+                  <select name="neighborhoodsTopic" id="neighborhoodsTopic" size="4" multiple>
+                    <option selected disabled>neighborhood</option>
+                    <!-- use this same block of code on the feeds and the sign in and topic page -->
+                  <% for(let i = 0; i < neighborhoods.length; i++) {%>
+                    <option value="<%= neighborhoods[i] %>"><%= neighborhoods[i] %></option>
+                  <% }%>  
+                </select>
+                <br><br>
+                <input type="submit" value="Submit">
+              </form>
+            </div>
+      
+          </div>
+          </div>
+          
+      </div>
+  </header>
+
+  <section class="pt-4">
+    <div class="container px-lg-5">
+        <!-- Page Features-->
+        <div class="row gx-lg-5">
+          <% for(var i=0; i<topic.length; i++) {%>
+            <div class="col-lg-6 col-xxl-4 mb-5">
+                <div class="card bg-light border-0 h-100">
+                    <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
+                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4"><i class="bi bi-collection"></i></div>
+                        <a href="/topicPost?id=<%= topic[i]._id%>">
+                          <h4> <%=topic[i].title %></h4>
+                          </a>
+
+                          <a href="/otherUserProfile/<%= topic[i].userId %>"><span> <%= topic[i].userName%></span></a>
+
+                          <% let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }; %>
+                            <p><%= topic[i].datePostedBy.toLocaleDateString("en-US", options)  %></p>
+                            <p><%= topic[i].zipcode  %></p>
+                            <p><%= topic[i].neighborhood  %></p>
+                          <span><i data-id="<%= topic[i]._id %>" class="fa save-topic fa-save" aria-hidden="true"></i></span>
+
+                          <% if ( topic[i].userId.equals(user._id)) { %>
+                          <span><i data-id="<%= topic[i]._id %>" class="fa topic-trash fa-trash" aria-hidden="true"></i></span>
+                          <% } %>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+          </div>
+      </div>
+  </section>
+
 
           <!-- so the profile section will have your saved housing posts, AND saved message board posts.  and other information to put in-->
 
-</div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="main.js"></script>
 
 </body>
 </html>
-<!-- zipcodes for the checkbox -->
-<!-- <input type="checkbox" id="instagram" name="zipcodeChosen" value="19101">
-    <label for="instagram">19101</label>
-  </div> -->
-<!-- 19102, 19103, 19104, 19106, 19107, 19109, 19111, 19112, 19114, 19115, 19116, 19118, 19119, 19120, 19121, 19122, 19123, 19124, 19125, 19126, 19127, 19128, 19129, 19130, 19131, 19132, 19133, 19134, 19135, 19136, 19137, 19138, 19139, 19140, 19141, 19142, 19143, 19144, 19145, 19146, 19147, 19148, 19149, 19150, 19151, 19152, 19153, 19154 -->
+
 
 

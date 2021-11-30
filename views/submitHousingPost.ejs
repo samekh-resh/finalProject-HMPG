@@ -46,9 +46,13 @@
               <input type="hidden" value="<%= user._id %>" name="userId">
             </div>
             <div class="form-group">
+              <label>address</label>
+              <input type="text" id="enterLocation" class="form-control" name="fullAddress" />
+            </div>
+            <div class="form-group">
               <label>zipcode</label>
               <select name="zipcode" id="zipcode" size="4">
-                <option selected disabled>neighborhood</option>
+                <option selected disabled>zipcode</option>
                 <!-- use this same block of code on the feeds and the sign in and topic page -->
             <% for(let i = 0; i < zipcodes.length; i++) {%>
                 <option value="<%= zipcodes[i] %>"><%= zipcodes[i] %></option>
@@ -59,6 +63,7 @@
               <label>city</label>
               <input type="text" class="form-control" name="city" />
             </div>
+            
             <div class="form-group">
               <label for="neighborhood">Neighborhood</label>
             
@@ -105,7 +110,12 @@
     </div>
 
 
-
+    <script
+      type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACHO3kyJ5MrGqVxl-4stvK2NXQM6SJFyE&libraries=places"
+    ></script>
+    
+    <script src="main.js"></script>
   </body>
 </html>
 
