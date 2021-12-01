@@ -1,6 +1,6 @@
 *{
   box-sizing: border-box;
-  color: rgb(79, 0, 11);
+  color: beige;
 }
 
 body{
@@ -49,7 +49,7 @@ select, input{
   border-radius: 10px;
 }
 
-
+/* 
 nav{
   background: rgb(252, 248, 248);
   width: 100%;
@@ -72,7 +72,7 @@ nav a{
   padding-left: 2%;
   position: relative;
   top: 5px;
-}
+} */
 
 .index{
   padding: 10px;
@@ -84,24 +84,6 @@ nav a{
   background: rgb(233, 136, 75);
 }
 
-.indexPageStyleBlocks{
-  padding: 10px;
-  border-radius: 10px;
-  width: 40%;
-  margin: auto;
-  margin-bottom: 3%;
-  background: rgb(233, 136, 75);
-  text-align: center;
-}
-
-.leftBlock{
-  position: relative;
-  right: 20%;
-}
-.rightBlock{
-  position: relative;
-  left: 20%;
-}
 img{
   height: 200px;
 }
@@ -165,6 +147,7 @@ ul{
   padding: 3%;
   width: 75%;
   margin:auto;
+  color:white;
 }
 
 .submitStatus{

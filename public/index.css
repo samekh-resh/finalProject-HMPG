@@ -1,0 +1,28 @@
+.indexPageStyleBlocks{
+    padding: 10px;
+    border-radius: 10px;
+    width: 40%;
+    margin: auto;
+    margin-bottom: 3%;
+    background: rgb(233, 136, 75);
+    text-align: center;
+  }
+  
+  .leftBlock{
+    position: relative;
+    right: 20%;
+  }
+  .rightBlock{
+    position: relative;
+    left: 20%;
+  }
+
+  .index{
+    padding: 10px;
+    border-radius: 15px;
+    width: 50%;
+    margin: auto;
+    margin-bottom: 3%;
+    margin-top: 3%;
+    background: rgb(233, 136, 75);
+  }

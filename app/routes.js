@@ -126,21 +126,21 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
   });
 
   app.get('/otherUserProfile/:id', isLoggedIn, async function (req, res) {
-    console.log(req.params.id)
-    let id = new ObjectId(req.params.id)
+    // let id = new ObjectId(req.params.id)
+    // console.log( 'this is the id', id)
     //retrieving housing posts
     const userRes = await
-      db.collection('users').findOne({ _id: id })
+      db.collection('users').findOne({ _id: req.params.id})
 
     //retrieving topics
     const chatRes = await
-      db.collection('chatSubmitted').findOne({ userId: id })
-    console.log(userRes, chatRes)
+      db.collection('chatSubmitted').findOne({ userId: req.params.id})
+    // console.log(userRes, chatRes)
     res.render('otherUserProfile.ejs', {
       user: userRes,
       chat: chatRes
     })
-  });
+  }); 
 
 
   // Submit Housing Post=========================

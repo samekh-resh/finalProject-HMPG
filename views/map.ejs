@@ -59,7 +59,7 @@
         
         
     </nav> -->
-    <h3>My Google Maps Demo</h3>
+    <h3>posts map!</h3>
     <div id="map">
         
       <script>
@@ -96,17 +96,19 @@
             })
             .then((data) => {
               console.log(data);
-              const allPlaces = [...data.housingPosts, ...data.topic]
-              for (let j = 0; j < data.housingPosts.length; j++) {
+              const allPlaces = [...data.housingPosts, ...data.topic] 
+              console.log( 'these are all places', allPlaces)
+              for (let j = 0; j < allPlaces.length; j++) {
 
-                let userAddress = data.housingPosts[j].fullAddress;
+                let userAddress = allPlaces[j].fullAddress;
                 console.log("this is userAddress", userAddress);
-                let queryAddress = userAddress.split(" ").join("+");
-                let img = data.housingPosts[j].img;
-                let title = data.housingPosts[j].title;
+                let queryAddress = userAddress ? userAddress.split(" ").join("+") : allPlaces[j].zipcode
+                let img = allPlaces[j].img;
+                let title = allPlaces[j].title;
+                let id = allPlaces[j]._id
                 let userCoordinates;
                 fetch(
-                  `https://maps.googleapis.com/maps/api/geocode/json?address=${queryAddress}&key=AIzaSyB0vrbaqfRBzXOFbEGmsNORTWRdG3zNFBI`
+                  `https://maps.googleapis.com/maps/api/geocode/json?address=${queryAddress}&key=AIzaSyACHO3kyJ5MrGqVxl-4stvK2NXQM6SJFyE`
                 )
                   .then((res) => res.json())
                   .then(function (result) {
@@ -114,7 +116,7 @@
                     let locations = [];
                     let lat = result.results[0].geometry.location.lat;
                     let lng = result.results[0].geometry.location.lng;
-                    let postData = [img, lat, lng, title];
+                    let postData = [img, lat, lng, title, id];
                     locations.push(postData);
                     console.log("locations", locations);
                     var infowindow = new google.maps.InfoWindow();
@@ -140,13 +142,24 @@
                         "click",
                         (function (marker, i) {
                           return function () {
-                            infowindow.setContent(
-                              `<img src="data:image/image/png;base64,${locations[i][0].toString(
+                            if (locations[i][0]){
+                              infowindow.setContent(
+                              
+                            
+                              `<a href="/housingPost?id=${locations[i][4]}"><img src="data:image/image/png;base64,${locations[i][0].toString(
                                 "base64"
                               )}" class="card-img" alt="..." width="500" height="600" id="img">` + 
-                              `<p>${locations[i][3]}</p>`
+                              `<p>${locations[i][3]}</p></a>`
                             
                             );
+                            }else{
+                              infowindow.setContent(
+                              
+                              `<a href="/topicPost?id=${locations[i][4]}"><p>${locations[i][3]}</p></a>`
+                            
+                            );
+                            }
+                            
                             infowindow.open(map, marker);
                           };
                         })(marker, i)
@@ -171,10 +184,10 @@
     ></script> -->
     <script
       type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0vrbaqfRBzXOFbEGmsNORTWRdG3zNFBI&libraries=places"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACHO3kyJ5MrGqVxl-4stvK2NXQM6SJFyE&libraries=places"
     ></script>
     <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0vrbaqfRBzXOFbEGmsNORTWRdG3zNFBI&channel=2&callback=initMap"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACHO3kyJ5MrGqVxl-4stvK2NXQM6SJFyE&channel=2&callback=initMap"
       async
       defer
     ></script>
