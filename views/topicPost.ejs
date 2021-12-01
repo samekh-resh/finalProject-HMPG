@@ -1,101 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-    <link rel="stylesheet" href="style.css">
-    <title>Topic Post</title>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Topic post</title>
+  <!-- Bootstrap icons-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
+  <!-- Core theme CSS (includes Bootstrap) taken from other template-->
+  <link href="styles.css" rel="stylesheet"/>
+  <link href="style.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 </head>
 <body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container px-lg-5">
+        <a class="navbar-brand" href="/">homepage</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="/submitHousingPost">Submit Housing</a> </li>
+                <li class="nav-item"><a class="nav-link" href="/submitTopic">Submit Topic</a></li>
+                <li class="nav-item"><a class="nav-link" href="/housingPostFeed">Housing</a></li>
+                <li class="nav-item"><a class="nav-link" href="/topicFeed">Topic</a></li>
+                <li class="nav-item"><a class="nav-link" href="/save" >Saved</a></li>
+                <li class="nav-item"><a class="nav-link" href="/profile" >Profile</a></li>
+                <li class="nav-item"><a class="nav-link" href="/map" >Map</a></li>
+                <li class="nav-item"><a class="nav-link" href="/logout" >Logout</a></li>
+                <li class="nav-item"><a class="nav-link" href="/login" >Login</a></li>
+            </ul>
+            </ul>
+        </div>
+    </div>
+</nav>
+<section class='title bg-dark'>
     
-</body>
-        <nav>
-            <h1>HOMEPAGE</h1>
-            <a href="/submitHousingPost">submit housing</a> 
-            <a href="/submitTopic">submit topic</a> 
-            <a href="/profile">profile</a> 
-            <a href="/housingPostFeed">housingFeed</a> 
-            <a href="/topicFeed">topicFeed</a> 
-            <a href="/logout" >Logout</a>
-            <a href="/save" >savedPage</a>
-            <a href="/login" >Login</a>
-        </nav>
-        <section class='title'>
-            
-            <h2><%= topic.title %></h2>
-            <% var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }; %>
-            <p> date posted:</p>
-            <p><%= topic.datePostedBy.toLocaleDateString("en-US", options) %></p>
+    <h2><%= topic.title %></h2>
+    <% var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }; %>
+    <p> date posted:</p>
+    <p><%= topic.datePostedBy.toLocaleDateString("en-US", options) %></p>
+</section>
+
+<div class='container userStatus infoSec'>
+  <div class="row cssForRow">
+    <div class="col cssForCol whoPosted">  
+      <label> posted by</label>  
+      <section class="renderedInfo">
+          
+          <a href="/otherUserProfile/<%= topic.userId %>"><h4> <%= topic.userName%></h4></a> 
+      </section>
+      
+    </div>
+    <div class="col cssForCol location">
+        <label> city </label>
+        <section class="renderedInfo">
+          <h4><%= topic.city %></h4>
         </section>
-
-        <div class='infoSec'>
-
-            <div class="whoPosted">  
-                <label> Posted by</label>  
-                <section class="renderedInfo">
-                    
-                    <a href="/otherUserProfile/<%= topic.userId %>"><h4> <%= topic.userName%></h4></a> 
-                </section>
-                
-            </div>
-            <div class="location">
-                <label> city </label>
-                <section class="renderedInfo">
-                  <h4><%= topic.city %></h4>
-                </section>
-            </div>
-              <div class="location">
-                <label> zipcode </label>
-                <section class="renderedInfo">
-                  <h5> <%= topic.zipcode %></h5>
-                </section>
-            </div>
-              <div class="location">
-                <label> neighborhood </label>
-                <section class="renderedInfo">
-                  <h5> <%= topic.neighborhood %></h5>
-                </section>
-            </div>
-            <div class="infoBlock">
-                <label>a little about the posting:</label>
-                <section class="renderedInfo">
-                    <h5><%= topic.aboutPosting %></h5>
-                </section>
-            </div>
-           
-            <!-- <h5> <%# topic.thumbUp %></h5> -->
-    
-            <!-- <span><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>
-            <span><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>
-            <span><i class="fa fa-trash" aria-hidden="true"></i></span> -->
+    </div>
+  </div>
+  <div class="row  cssForRow">
+    <div class="col cssForCol location">
+        <label> zipcode </label>
+        <section class="renderedInfo">
+          <h5> <%= topic.zipcode %></h5>
+        </section>
+    </div>
+      <div class="col cssForCol location">
+        <label> neighborhood </label>
+        <section class="renderedInfo">
+          <h5> <%= topic.neighborhood %></h5>
+        </section>
+    </div>
+  </div>
+  <div class="infoBlock">
+        <label>a little about the posting:</label>
+        <section class="renderedInfo">
+            <h5><%= topic.aboutPosting %></h5>
+        </section>
+    </div>
+  <div class="row cssForRow">
+    <div class="col cssForCol commentSec">
+      <label> comment </label>
+      <section class="renderedInfo">
+        <% for (let i = 0; i < comments.length; i++) {%>
+        <div class="individualComment">
+          <h4><%= comments[i].comment %></h4>
+          <p><a href="/otherUserProfile/<%= comments[i].postedById %>"> <%= comments[i].postedBy %> </a></p>
         </div>
+        <% } %>
+      </section>
+    </div>
+  
+    <div class="col cssForCol commentSubm">
+      <label for="">comment</label>
+      <% if (user.local.email) { %>
+      <form action="/makeCommentTopic/<%= topic._id %>" method="POST">
+          <!-- <input type="text" name="user" placeholder="user"> -->
+          <input type="text" name="comment" placeholder="comment">
+          <button class="btn" type="submit">Submit</button>
+      </form>
+      <% } %>
+    </div>
+  </div>
 
-        <div class="commentSec">
-            <label> comment </label>
-            <section class="renderedInfo">
-              <% for (let i = 0; i < comments.length; i++) {%>
-              <div class="individualComment">
-                <h4><%= comments[i].comment %></h4>
-                <p><a href="/otherUserProfile/<%= comments[i].postedById %>"> <%= comments[i].postedBy %> </a></p>
-              </div>
-              <% } %>
-            </section>
-        </div>
     
 
-        <div class="commentSubm">
-            <h2>comment</h2>
-            <% if (user.local.email) { %>
-            <form action="/makeCommentTopic/<%= topic._id %>" method="POST">
-                <!-- <input type="text" name="user" placeholder="user"> -->
-                <input type="text" name="comment" placeholder="comment">
-                <button type="submit">Submit</button>
-            </form>
-            <% } %>
-        </div>
+    
+   
+    <!-- <h5> <%# topic.thumbUp %></h5> -->
+
+    <!-- <span><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>
+    <span><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>
+    <span><i class="fa fa-trash" aria-hidden="true"></i></span> -->
+</div>
+
+
+    
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="main.js"></script>
+</body>
+        
     
     
 </html>

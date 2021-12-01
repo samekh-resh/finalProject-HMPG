@@ -323,7 +323,7 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
 
   // get topic page=========================
   app.get('/topicFeed', isLoggedIn, function (req, res) {
-    db.collection('topic').find().toArray((err, result) => {
+    db.collection('topic').find({ zipcode: req.user.zipcode }).toArray((err, result) => {
       if (err) return console.log(err)
       res.render('topicFeed.ejs', {
         user: req.user,
