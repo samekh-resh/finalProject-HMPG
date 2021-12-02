@@ -6,8 +6,8 @@ finding a home. on the same page.
 
 
 
-![](shot1.png)
-![](shot3.png)
+![](shot2.png)
+![](shot4.png)
 
 ### How It’s Made
 Utilizing the express.js framework and some other node dependencies, we created three options to choose.
