@@ -47,7 +47,7 @@
         <% } %>
         
           <!-- LOGIN FORM -->
-          <form action="/signup" method="post">
+          <form style="background: #212529;"  action="/signup" method="post">
             
             <div class="form-group">
               <label>UserName</label>
@@ -92,7 +92,7 @@
             <div class="form-group">
               <label for="neighborhood">Neighborhood</label>
             
-              <select name="neighborhood" id="neighborhood" size="4">
+              <select style="display:block;margin:auto;"name="neighborhood" id="neighborhood" size="4">
                 <option selected disabled>neighborhood</option>
                 <!-- use this same block of code on the feeds and the sign in and topic page -->
               <% for(let i = 0; i < neighborhoods.length; i++) {%>
@@ -116,7 +116,7 @@
             
             
 
-            <button class="newBtn" type="submit" class="btn btn-warning btn-lg">Signup</button>
+            <button style="margin-top:2%;" type="submit" class="btn btn-primary btn-lg">Signup</button>
 
             
           </form>
