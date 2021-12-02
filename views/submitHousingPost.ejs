@@ -7,8 +7,8 @@
     <title>Submit Housing Post</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap) taken from other template-->
-    <link href="styles.css" rel="stylesheet"/>
-    <link href="style.css" rel="stylesheet"/>
+    <link href="/styles.css" rel="stylesheet"/>
+    <link href="/style.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <!-- <link rel="stylesheet" href="style.css" /> -->
   </head>
@@ -48,8 +48,12 @@
               <input type="hidden" value="<%= user._id %>" name="userId">
             </div>
             <div class="col cssForCol form-group">
-              <label>address</label>
-              <input type="text" id="enterLocation" class="form-control" name="fullAddress" />
+              <label>city</label>
+              <input type="text" class="form-control" name="city" />
+            </div>
+            <div class="col cssForCol  form-group">
+              <label>date Posted By</label>
+              <input type="date" class="form-control" name="datePostedBy" />
             </div>
         </div>
 
@@ -67,7 +71,8 @@
           <div class=" col cssForCol  form-group">
             <label for="neighborhood">Neighborhood</label>
           
-            <select name="neighborhood" id="neighborhood" size="4">
+            <select style="display:block;
+            margin: auto;" name="neighborhood" id="neighborhood" size="4">
               <option selected disabled>neighborhood</option>
               <!-- use this same block of code on the feeds and the sign in and topic page -->
           <% for(let i = 0; i < neighborhoods.length; i++) {%>
@@ -79,15 +84,15 @@
         </div>
         <div class="row cssForRow">
           <div class="col cssForCol form-group">
-            <label>city</label>
-            <input type="text" class="form-control" name="city" />
+            <label>address</label>
+            <input type="text" id="enterLocation" class="form-control" name="fullAddress" />
           </div>
-          
           
           <div class="col cssForCol  form-group">
             <label for="housingType">Choose a housingType:</label>
 
-            <select name="housingType" id="housingType">
+            <select style="display:block;
+            margin: auto;" name="housingType" id="housingType" required>
               <option value="longterm">longterm (1yr+)</option>
               <option value="short Term">short term (6mos-1yr)</option>
               <option value="temporary">temporary</option>
@@ -99,10 +104,12 @@
             <label>Title</label>
             <input type="text" class="form-control" name="title" />
           </div>
-          <div class="col cssForCol  form-group">
-            <label>date Posted By</label>
-            <input type="date" class="form-control" name="datePostedBy" />
+          <div class="cssForCol col form-group">
+            <label>pictures</label>
+            <input style="display:block;
+            margin: auto; color:white;" type="file" name="file-to-upload" class="fileChose" required>
           </div>
+          
         </div>
         <div class="cssForRow row">
           <div class="cssForCol col form-group">
@@ -110,12 +117,7 @@
             <input type="text" class="form-control" name="aboutPosting" />
           </div>
         </div>
-        <div class="cssForRow row">
-          <div class="cssForCol col form-group">
-            <label>pictures</label>
-            <input type="file" name="file-to-upload" class="fileChose">
-          </div>
-        </div>
+        
         
 
             <button type="submit" class="btn btn-primary btn-lg">send</button>

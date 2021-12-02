@@ -5,13 +5,13 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>user profile</title>
+    <title>other user profile</title>
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap) taken from other template-->
-    <link href="styles.css" rel="stylesheet" />
+    <link href="/styles.css" rel="stylesheet" />
     <!-- individual styling -->
-    <link href="style.css" rel="stylesheet" />
+    <link href="/style.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
   </head>
 <body>
@@ -28,6 +28,7 @@
                 <li class="nav-item"><a class="nav-link" href="/topicFeed">Topic</a></li>
                 <li class="nav-item"><a class="nav-link" href="/save" >Saved</a></li>
                 <li class="nav-item"><a class="nav-link" href="/map" >Map</a></li>
+                <li class="nav-item"><a class="nav-link" href="/profile" >Profile</a></li>
                 <li class="nav-item"><a class="nav-link" href="/logout" >Logout</a></li>
                 <li class="nav-item"><a class="nav-link" href="/login" >Login</a></li>
             </ul>
@@ -39,7 +40,6 @@
 
     <div class="profileBlock text-center">
         <h1><span class="fa fa-anchor"></span> Profile Page</h1>
-        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
     </div>
 
         <div class="container userStatus">
@@ -51,16 +51,16 @@
                 <% if (chat && chat.userId) {%>
                 <div class="row cssForRow">
                   <section class="col cssForCol">
-                    <label for=""> </label>
+                    <label>userName</label>
                     <p><%= chat.userName %> </p>
                   </section>
                   <section class="col cssForCol">
-                    <label for=""> </label>
+                    <label>housing status</label>
                     <p><%= chat.housingStatus %> </p>
                   </section>
                   <section class="col cssForCol">
                     <% let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }; %>
-                    <label for=""> </label>
+                    <label>datePostedBy</label>
                     <p> <%= chat.datePostedBy.toLocaleDateString("en-US", options) %> 
                     </p>
                   </section>
@@ -68,6 +68,47 @@
                   <p class="col cssForCol"> user has not placed a status, yet.</p>
                   <% } %>
                 </div>
+
+                <form class="row cssForRow" action="/offers" method="post">
+                  <input type="hidden" value="<%= chat.userId %>" name="intendedFor">
+                  <input type="hidden" value="<%= loggedInUser._id %>" name="postedBy">
+                  <input type="hidden" value="<%= loggedInUser.local.email %>" name="userEmail">
+                  <div class=" col  cssForCol nameProfile form-group">
+                    <label>name</label>
+                    <input type="text" class="form-control" value="<%= loggedInUser.userName %>" name="userName" />
+                  </div>
+                  <div class=" col  cssForCol nameProfile form-group">
+                    <label for="offersSent">what are you offering:</label>
+                    <select name='offersSent' id="offersSent">
+                    <optgroup label="needsHousing">
+                        <option value="needs shortTerm">needs shortTerm</option>
+                        <option value="needs longTerm">needs longTerm</option>
+                        <option value="needs temporary">needs temporary</option>
+                    </optgroup>
+                    <optgroup label="offeringHousing">
+                        <option value="offering shortTerm">offering shortTerm</option>
+                        <option value="offering longTerm">offering longTerm</option>
+                        <option value="offering temporary">offering temporary</option>
+                    </optgroup>
+                    <option>neither</option>
+                      </select>
+                  </div>
+                  
+                  <div class=" col cssForCol datePosted form-group">
+                    <label>date Posted By</label>
+                    <input type="date" class="form-control" name="datePostedBy" />
+                  </div>
+                  <div class=" col cssForCol form-group">
+                    <label>more direct contact? put it below</label>
+                    <input type="text" class="form-control" name="contact" />
+                  </div>
+                  <button type="submit" class=" btn btn-primary">Submit</button>
+                </form>
+            </div>
+
+          
+               
+     
         </div>    
                     
 
@@ -77,3 +118,4 @@
 
 </body>
 </html>
+

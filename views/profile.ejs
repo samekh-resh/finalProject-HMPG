@@ -27,6 +27,7 @@
                 <li class="nav-item"><a class="nav-link" href="/topicFeed">Topic</a></li>
                 <li class="nav-item"><a class="nav-link" href="/save" >Saved</a></li>
                 <li class="nav-item"><a class="nav-link" href="/map" >Map</a></li>
+                <li class="nav-item"><a class="nav-link" href="/profile" >Profile</a></li>
                 <li class="nav-item"><a class="nav-link" href="/logout" >Logout</a></li>
                 <li class="nav-item"><a class="nav-link" href="/login" >Login</a></li>
             </ul>
@@ -37,7 +38,7 @@
 
   <div class="profileBlock text-center">
            <div>
-              <h2><span class="fa fa-id-badge"></span> Profile </h2>
+              <h2>Profile </h2>
           </div> 
 
               <% if (user.local.email) { %>
@@ -55,7 +56,7 @@
 
 <!-- get all the boxes to center the page, round the edges of the boxes -->
         <div class="container userStatus">
-          <h6>chats for the day!</h6>
+          <h6>your current status status</h6>
               
                 <% if(chatSubmitted.userId) {%>
 
@@ -65,17 +66,15 @@
                 <div class="row cssForRow">
                    <section class="col cssForCol">
                     <label>userName</label>
-                     <p><%= chatSubmitted.userName %></p> </section>
+                     <h5 style="color:white;"><%= chatSubmitted.userName %></h5> </section>
                    <section class="col cssForCol">
                     <label>housing status</label>
-                     <p><%= chatSubmitted.housingStatus %></p> </section>
+                     <h5><%= chatSubmitted.housingStatus %></h5> </section>
                   <% let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }; %>
                    <section class="col cssForCol">
                     <label>datePostedBy</label>
-                     <p><%= chatSubmitted.datePostedBy.toLocaleDateString("en-US", options) %></p> </section>
-                  <!--  <section></p><span><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>
-                    <span><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>
-                    <span><i class="fa fa-trash" aria-hidden="true"></i></span></p> </section>-->
+                     <h5><%= chatSubmitted.datePostedBy.toLocaleDateString("en-US", options) %></h5> </section>
+
                 </div>
                 <% } %>
               
@@ -86,10 +85,33 @@
                 
                 <% } %>
 
+            <div class="row cssForRow usersInterested">
+              <p style="color:white">users interested</p>
+              <% for (let i = 0; i < userOffers.length; i++){ %>
+              <section style="color:white" class="col-lg-3 col-xxl-4 mb-5">
 
-               <h6>submit your status</h6>
+                <div class="card bg-dark border-0 h-100">
+                    <a href="/otherUserProfile/<%= userOffers[i].postedBy %>"><span> <%= userOffers[i].userName%></span></a>
+                    <p>
+                      <%= userOffers[i].offersSent %>
+                    </p>
+                    <p>
+                      <%= userOffers[i].userEmail %>
+                    </p>
+                    <p>
+                      <%= userOffers[i].contact %>
+                    </p>
+                    <p>
+                      <% let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }; %>
+                    <%= userOffers[i].datePostedBy.toLocaleDateString("en-US", options) %>
+                    </p>
+              
+                </div>
+              </section>
+              <% } %>
+            </div>
+       <h6>submit your status</h6>
           <% if (user.local.email) { %>
-
 
           <form class="row cssForRow" action="/chatSubmitted" method="post">
             <input type="hidden" value="<%= user._id %>" name="userId">
@@ -97,16 +119,21 @@
               <label>name</label>
               <input type="text" class="form-control" value="<%= user.userName %>" name="userName" />
             </div>
-            <div class=" col cssForCol housingStatus form-group">
-              <label for="housingType">looking for housing?</label>
-  
-              <select name="housingStatus" id="housingStatus">
-                <option value="yes">yes</option>
-                <option value="no">no</option>
-                <option value="temporary">providing temporary</option>
-                <option value="short term">providing short term</option>
-                <option value="longterm">providing longterm</option>
-              </select>
+            <div class=" col-5  cssForCol nameProfile form-group">
+              <label for="housingStatus">what</label>
+              <select name='housingStatus' id="housingStatus">
+              <optgroup label="needsHousing">
+                  <option value="needs shortTerm">needs shortTerm</option>
+                  <option value="needs longTerm">needs longTerm</option>
+                  <option value="needs temporary">needs temporary</option>
+              </optgroup>
+              <optgroup label="offeringHousing">
+                  <option value="offering shortTerm">offering shortTerm</option>
+                  <option value="offering longTerm">offering longTerm</option>
+                  <option value="offering temporary">offering temporary</option>
+              </optgroup>
+              <option>neither</option>
+                </select>
             </div>
             <div class=" col cssForCol datePosted form-group">
               <label>date Posted By</label>
@@ -114,7 +141,7 @@
             </div>
 
             
-            <button type="submit" class=" btn btn-primary">Submit</button>
+            <button style="width:25%;margin:auto;"type="submit" class=" btn btn-primary">Submit</button>
           </form>
           
             

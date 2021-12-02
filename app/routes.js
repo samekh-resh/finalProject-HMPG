@@ -95,52 +95,84 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
       topic: topicRes
     })
   });
-  // app.get('/locations', function (req, res) {
-  //   db.collection('housingPost').find().toArray((err, result) => {
-  //     console.log(result)
-  //     if (err) return console.log(err)
-  //     res.send({
-  //       user: req.user,
-  //       housingPosts: result
-  //     })
-  //   })
-  // });
 
 
   // PROFILE SECTION =========================
-  app.get('/profile', isLoggedIn, function (req, res) {
-    //at some point, we need to be finding from the database that shows the saved posts and topcis of each user, but for now it will jsut find the postings. 
-    console.log('hopefully', req.user)
-    db.collection('chatSubmitted').findOne({ userId: ObjectId(req.user._id) }, (err, result) => {
-      // console.log(result._)
-      if (err) return console.log(err)
+  // app.get('/profile', isLoggedIn, function (req, res) {
+  //   //at some point, we need to be finding from the database that shows the saved posts and topcis of each user, but for now it will jsut find the postings. 
+  //   console.log('hopefully', req.user)
+  //   db.collection('chatSubmitted').findOne({ userId: ObjectId(req.user._id) }, (err, result) => {
+  //     // console.log(result._)
+  //     if (err) return console.log(err)
 
-      res.render('profile.ejs', {
-        user: req.user,
-        chatSubmitted: result ? result : { userId: 0 }
-      })
-      //  console.log(req.user._id)
-      // console.log(chatSubmitted)
+  //     res.render('profile.ejs', {
+  //       user: req.user,
+
+  //       chatSubmitted: result ? result : { userId: 0 }
+  //     })
+  //     //  console.log(req.user._id)
+  //     // console.log(chatSubmitted)
+  //   })
+
+  // });
+
+  app.get('/profile', isLoggedIn, async function (req, res) {
+
+    //retrieving housing posts
+    const chatRes = await
+    db.collection('chatSubmitted').findOne({ userId: ObjectId(req.user._id) });
+
+    //retrieving topics
+    let userString = req.user._id.toString()
+    const userOffersRes = await
+      db.collection('userOffers').find({ intendedFor: userString}).toArray();
+      console.log( 'user offers',userOffersRes)
+      console.log( 'user\'s id',req.user._id)
+    res.render('profile.ejs', {
+      user: req.user,
+      chatSubmitted: chatRes ? chatRes : { userId: 0 },
+      userOffers: userOffersRes
     })
-
   });
+
+  
+
 
   app.get('/otherUserProfile/:id', isLoggedIn, async function (req, res) {
     // let id = new ObjectId(req.params.id)
     // console.log( 'this is the id', id)
     //retrieving housing posts
     const userRes = await
-      db.collection('users').findOne({ _id: req.params.id})
+      db.collection('users').find({ _id: ObjectId(req.params.id)})
 
     //retrieving topics
     const chatRes = await
-      db.collection('chatSubmitted').findOne({ userId: req.params.id})
+      db.collection('chatSubmitted').findOne({ userId: ObjectId(req.params.id)})
     // console.log(userRes, chatRes)
     res.render('otherUserProfile.ejs', {
       user: userRes,
+      loggedInUser: req.user,
       chat: chatRes
     })
   }); 
+
+  // app.get('/otherUserProfile', isLoggedIn, async function (req, res) {
+  //   // let id = new ObjectId(req.params.id)
+  //   // console.log( 'this is the id', id)
+  //   //retrieving housing posts
+  //   const userRes = await
+  //     db.collection('users').find({ _id: ObjectId(req.params.id)})
+
+  //   //retrieving topics
+  //   const chatRes = await
+  //     db.collection('chatSubmitted').findOne({ userId: ObjectId(req.params.id)})
+  //   // console.log(userRes, chatRes)
+  //   res.render('otherUserProfile.ejs', {
+  //     user: userRes,
+  //     loggedInUser: req.user,
+  //     chat: chatRes
+  //   })
+  // }); 
 
 
   // Submit Housing Post=========================
@@ -375,6 +407,24 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
       console.log('saved to database')
       res.redirect('/topicFeed')
       // this ejs file will haave to be the page where the post is individuall going to be shown. 
+    })
+  })
+
+  app.post('/offers', isLoggedIn, (req, res) => {
+    db.collection('userOffers').save({
+      intendedFor: req.body.intendedFor,
+      postedBy: req.body.postedBy,
+      userEmail: req.body.userEmail,
+      userName: req.body.userName,
+      offersSent: req.body.offersSent,
+      contact: req.body.contact,
+      datePostedBy: new Date(req.body.datePostedBy)
+    }, (err, result) => {
+      if (err) return console.log(err)
+      console.log('saved to database')
+      res.redirect('/profile')
+      // this ejs file will haave to be the page where the post is individuall going to be shown. 
+      //trying it with a res.render
     })
   })
 

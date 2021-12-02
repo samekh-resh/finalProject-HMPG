@@ -10,6 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap) taken from other template-->
     <link href="styles.css" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
 
 
     <style>
@@ -40,6 +41,7 @@
                     <li class="nav-item"><a class="nav-link" href="/topicFeed">Topic</a></li>
                     <li class="nav-item"><a class="nav-link" href="/save" >Saved</a></li>
                     <li class="nav-item"><a class="nav-link" href="/map" >Map</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/profile" >Profile</a></li>
                     <li class="nav-item"><a class="nav-link" href="/logout" >Logout</a></li>
                     <li class="nav-item"><a class="nav-link" href="/login" >Login</a></li>
                 </ul>
@@ -47,33 +49,14 @@
             </div>
         </div>
     </nav>
-    <!-- <nav>
-        <h1>HOMEPAGE</h1>
-        
-         
-        
-         
-         
-        
-        
-        
-        
-    </nav> -->
-    <h3>posts map!</h3>
+
+    <div class="profileBlock text-center">
+      <h1> Posts Map</h1>
+  </div>
+    
     <div id="map">
         
       <script>
-        //   let housingPosts = `<%# JSON.stringify(housingPosts) %>`;
-        //   housingPosts = JSON.parse(housingPosts);
-
-        //   housingPosts.forEach((housingPost) => {
-        //     const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${housingPost.zipcode}&key=AIzaSyACHO3kyJ5MrGqVxl-4stvK2NXQM6SJFyE`;
-
-        //     console.log(
-        //       "should fetch this url to get lat and long, use lat and long to put marker on the map ",
-        //       url
-        //     );
-        //   });
 
         function initMap() {
           let options = {
@@ -149,13 +132,13 @@
                               `<a href="/housingPost?id=${locations[i][4]}"><img src="data:image/image/png;base64,${locations[i][0].toString(
                                 "base64"
                               )}" class="card-img" alt="..." width="500" height="600" id="img">` + 
-                              `<p>${locations[i][3]}</p></a>`
+                              `<p>${locations[i][3]} (hp)</p></a>`
                             
                             );
                             }else{
                               infowindow.setContent(
                               
-                              `<a href="/topicPost?id=${locations[i][4]}"><p>${locations[i][3]}</p></a>`
+                              `<a href="/topicPost?id=${locations[i][4]}"><p>${locations[i][3]} (tp)</p></a>`
                             
                             );
                             }
@@ -170,18 +153,9 @@
             });
         }
 
-        //   new google.maps.Marker({
-        //     position: myLatLng,
-        //     map,
-        //     title: "Hello World!",
-        //   });
       </script>
     </div>
 
-    <!-- <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACHO3kyJ5MrGqVxl-4stvK2NXQM6SJFyE&callback=initMap&libraries=&v=weekly"
-      async
-    ></script> -->
     <script
       type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACHO3kyJ5MrGqVxl-4stvK2NXQM6SJFyE&libraries=places"

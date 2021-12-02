@@ -131,6 +131,10 @@ ul{
   box-shadow: -32px 42px 37px 5px rgba(0,0,0,0.22);
 }
 
+#housingStatus, #offersSent{
+  width:100%;
+}
+
 
 .nameProfile{
   width:20%;
@@ -145,7 +149,7 @@ ul{
   margin:auto;
   margin-bottom: 3%;
   margin-top: 3%;
-  width: 200px;
+  width: 300px;
   text-align: center;
 }
 
@@ -228,7 +232,7 @@ label{
 }
 
 form{
-  background: rgb(151, 23, 42);
+  background: rgba(248, 204, 204, 0.837);
   text-align: center;
   padding: 7px;
   border-radius: 10px;
@@ -240,6 +244,11 @@ form{
   display: block;
   width: 100%;
 
+}
+
+#zipcode, #zipcodesHousing, #neighborhoodsHousing, #zipcodesTopic, #neighborhoodsTopic {
+  display:block;
+  margin: auto;
 }
 .feed{
   overflow: scroll;
@@ -269,6 +278,17 @@ form{
 }
 
 
+.card p{
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.usersInterested{
+  border: 1px solid black;
+  overflow:scroll;
+  border-radius: 10px;
+  background: rgb(255, 127, 81);
+}
 /* .feedForms{
   display:table-caption;
 } */
