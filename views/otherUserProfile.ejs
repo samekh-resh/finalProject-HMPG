@@ -39,7 +39,7 @@
     <!-- chats will be changed to user posts and info like reach out if you need help with housing or whatever? -->
 
     <div class="profileBlock text-center">
-        <h1><span class="fa fa-anchor"></span> Profile Page</h1>
+        <h1> Profile Page</h1>
     </div>
 
         <div class="container userStatus">
@@ -52,20 +52,20 @@
                 <div class="row cssForRow">
                   <section class="col cssForCol">
                     <label>userName</label>
-                    <p><%= chat.userName %> </p>
+                    <h5 style="color:white;" ><%= chat.userName %> </h5>
                   </section>
                   <section class="col cssForCol">
                     <label>housing status</label>
-                    <p><%= chat.housingStatus %> </p>
+                    <h5 style="color:white;"><%= chat.housingStatus %> </h5>
                   </section>
                   <section class="col cssForCol">
                     <% let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }; %>
                     <label>datePostedBy</label>
-                    <p> <%= chat.datePostedBy.toLocaleDateString("en-US", options) %> 
-                    </p>
+                    <h5 style="color:white;"> <%= chat.datePostedBy.toLocaleDateString("en-US", options) %> 
+                    </h5>
                   </section>
                 <% } else { %>
-                  <p class="col cssForCol"> user has not placed a status, yet.</p>
+                  <h5 class="col cssForCol"> user has not placed a status, yet.</h5>
                   <% } %>
                 </div>
 

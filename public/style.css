@@ -216,6 +216,17 @@ ul{
   padding: 3%;
 }
 
+.infoBlock{
+  border:rgba(255, 255, 255, 0.864) 1px solid;
+  background: rgb(132, 62, 37);
+  margin:auto;
+  color: white;
+  margin-bottom: 2%;
+  margin-top: 14%;
+  border-radius: 10px;
+  padding: 3%;
+}
+
 label{
   color:white;
 }

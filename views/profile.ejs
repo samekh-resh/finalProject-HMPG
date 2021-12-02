@@ -69,11 +69,11 @@
                      <h5 style="color:white;"><%= chatSubmitted.userName %></h5> </section>
                    <section class="col cssForCol">
                     <label>housing status</label>
-                     <h5><%= chatSubmitted.housingStatus %></h5> </section>
+                     <h5 style="color:white;"><%= chatSubmitted.housingStatus %></h5> </section>
                   <% let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }; %>
                    <section class="col cssForCol">
                     <label>datePostedBy</label>
-                     <h5><%= chatSubmitted.datePostedBy.toLocaleDateString("en-US", options) %></h5> </section>
+                     <h5 style="color:white;"><%= chatSubmitted.datePostedBy.toLocaleDateString("en-US", options) %></h5> </section>
 
                 </div>
                 <% } %>
