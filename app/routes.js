@@ -21,24 +21,9 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
     res.render('index.ejs');
   });
 
-  // app.get('/save', isLoggedIn, function (req, res) {
-  //   db.collection('housingPost').find({
-  //     interestedUsers: ObjectId(req.user.id)
-  //   }).toArray((err, result) => {
-  //     if (err) return console.log(err)
-  //     res.render('saved.ejs', {
-  //       user: req.user,
-  //       housingPosts: result
-  //     });
-  //   });
-  // })
+ 
 
-  // //route for map
-  // app.get('/map', function (req, res) {
-  //   res.render('map.ejs');
-  // });
-
-  //
+  //route to render map 
 
   app.get('/map', isLoggedIn, function (req, res) {
     //limit it to your zipcode asp
@@ -55,7 +40,7 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
 
 
   //get locations so that they can render on the map
-  
+
   // for save page
   app.get('/save', isLoggedIn, async function (req, res) {
 
@@ -88,7 +73,7 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
     const topicRes = await
       db.collection('topic').find().toArray();
 
-    
+
     res.send({
       user: req.user,
       housingPosts: housingRes,
@@ -97,37 +82,18 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
   });
 
 
-  // PROFILE SECTION =========================
-  // app.get('/profile', isLoggedIn, function (req, res) {
-  //   //at some point, we need to be finding from the database that shows the saved posts and topcis of each user, but for now it will jsut find the postings. 
-  //   console.log('hopefully', req.user)
-  //   db.collection('chatSubmitted').findOne({ userId: ObjectId(req.user._id) }, (err, result) => {
-  //     // console.log(result._)
-  //     if (err) return console.log(err)
-
-  //     res.render('profile.ejs', {
-  //       user: req.user,
-
-  //       chatSubmitted: result ? result : { userId: 0 }
-  //     })
-  //     //  console.log(req.user._id)
-  //     // console.log(chatSubmitted)
-  //   })
-
-  // });
-
   app.get('/profile', isLoggedIn, async function (req, res) {
 
     //retrieving housing posts
     const chatRes = await
-    db.collection('chatSubmitted').findOne({ userId: ObjectId(req.user._id) });
+      db.collection('chatSubmitted').findOne({ userId: ObjectId(req.user._id) });
 
     //retrieving topics
     let userString = req.user._id.toString()
     const userOffersRes = await
-      db.collection('userOffers').find({ intendedFor: userString}).toArray();
-      console.log( 'user offers',userOffersRes)
-      console.log( 'user\'s id',req.user._id)
+      db.collection('userOffers').find({ intendedFor: userString }).toArray();
+    console.log('user offers', userOffersRes)
+    console.log('user\'s id', req.user._id)
     res.render('profile.ejs', {
       user: req.user,
       chatSubmitted: chatRes ? chatRes : { userId: 0 },
@@ -135,7 +101,7 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
     })
   });
 
-  
+
 
 
   app.get('/otherUserProfile/:id', isLoggedIn, async function (req, res) {
@@ -143,37 +109,18 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
     // console.log( 'this is the id', id)
     //retrieving housing posts
     const userRes = await
-      db.collection('users').find({ _id: ObjectId(req.params.id)})
+      db.collection('users').find({ _id: ObjectId(req.params.id) })
 
     //retrieving topics
     const chatRes = await
-      db.collection('chatSubmitted').findOne({ userId: ObjectId(req.params.id)})
+      db.collection('chatSubmitted').findOne({ userId: ObjectId(req.params.id) })
     // console.log(userRes, chatRes)
     res.render('otherUserProfile.ejs', {
       user: userRes,
       loggedInUser: req.user,
       chat: chatRes
     })
-  }); 
-
-  // app.get('/otherUserProfile', isLoggedIn, async function (req, res) {
-  //   // let id = new ObjectId(req.params.id)
-  //   // console.log( 'this is the id', id)
-  //   //retrieving housing posts
-  //   const userRes = await
-  //     db.collection('users').find({ _id: ObjectId(req.params.id)})
-
-  //   //retrieving topics
-  //   const chatRes = await
-  //     db.collection('chatSubmitted').findOne({ userId: ObjectId(req.params.id)})
-  //   // console.log(userRes, chatRes)
-  //   res.render('otherUserProfile.ejs', {
-  //     user: userRes,
-  //     loggedInUser: req.user,
-  //     chat: chatRes
-  //   })
-  // }); 
-
+  });
 
   // Submit Housing Post=========================
   app.get('/submitHousingPost', isLoggedIn, function (req, res) {
@@ -384,11 +331,7 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
     })
   });
 
-  // LOGOUT ==============================
-  app.get('/logout', function (req, res) {
-    req.logout();
-    res.redirect('/');
-  });
+
 
   // housing oist route board routes ===============================================================
 
@@ -537,58 +480,6 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
       })
   })
 
-
-
-  // //unsave from a post
-  // app.put('/unSavePost', isLoggedIn,  function (req, res) {
-
-  //   //retrieving housing posts
-  //     db.collection('housingPost')
-  //       .findOneAndUpdate({ _id: ObjectId(req.body._id) }, {
-  //         $pull: {
-  //           interestedUsers: ObjectId(req.user._id)
-  //         }
-  //       }, {
-  //         sort: { _id: -1 },
-  //         upsert: false
-  //       })
-
-  //   //retrieving topics
-  //     db.collection('topic')
-  //       .findOneAndUpdate({ _id: ObjectId(req.body._id) }, {
-  //         $pull: {
-  //           interestedUsers: ObjectId(req.user._id)
-  //         }
-  //       }, {
-  //         sort: { _id: -1 },
-  //         upsert: false
-  //       })
-
-
-  //   res.render('saved.ejs', {
-  //     user: req.user,
-  //     housingPosts: result,
-  //     topic: result
-  //   })
-  // });
-
-
-
-  // app.put('/messages', (req, res) => {
-  //   db.collection('messages')
-  //     .findOneAndUpdate({ name: req.body.name, msg: req.body.msg }, {
-  //       $set: {
-  //         thumbUp: req.body.thumbUp + 1
-  //       }
-  //     }, {
-  //       sort: { _id: -1 },
-  //       upsert: true
-  //     }, (err, result) => {
-  //       if (err) return res.send(err)
-  //       res.send(result)
-  //     })
-  // })
-
   app.delete('/delete', isLoggedIn, (req, res) => {
     db.collection('topic').findOneAndDelete({ _id: ObjectId(req.body.id) }, (err, result) => {
       if (err) return res.send(500, err)
@@ -602,7 +493,11 @@ module.exports = function (app, passport, db, ObjectId, neighborhoods, zipcodes)
       res.send('Message deleted!')
     })
   })
-
+  // LOGOUT ==============================
+  app.get('/logout', function (req, res) {
+    req.logout();
+    res.redirect('/');
+  });
 
   // =============================================================================
   // AUTHENTICATE (FIRST LOGIN) ==================================================

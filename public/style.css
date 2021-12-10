@@ -235,6 +235,7 @@ label{
   background: rgba(248, 204, 204, 0.837);
   border-radius: 10px;
   padding: 3%;
+  overflow: scroll;
 }
 
 .searchForms{
@@ -292,6 +293,7 @@ form{
 .card p{
   margin-top: 0;
   margin-bottom: 0;
+  padding:3%;
 }
 
 .usersInterested{
@@ -299,6 +301,16 @@ form{
   overflow:scroll;
   border-radius: 10px;
   background: rgb(255, 127, 81);
+}
+
+.otherUserBtn{
+  position: relative;
+  left: 40%;
+}
+
+.boxOverflow{
+  height: 120px;
+  overflow: scroll;
 }
 /* .feedForms{
   display:table-caption;
